@@ -98,4 +98,7 @@ dependencies {
   //bar code
   implementation 'com.google.zxing:core:3.3.2'
   implementation 'com.journeyapps:zxing-android-embedded:3.6.0@aar'
+
+  //rv dividers
+  implementation 'com.bignerdranch.android:simple-item-decoration:1.0.0'
 }

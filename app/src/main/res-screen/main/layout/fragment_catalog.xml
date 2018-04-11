@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorLLightGray"
     >
   <TextView
       android:id="@+id/tvTitle"
@@ -28,5 +29,13 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/tvTitle"
       tools:listitem="@layout/item_service_parent"
+      />
+  <View
+      android:layout_width="0dp"
+      android:layout_height="1dp"
+      android:background="@drawable/list_divider_vertical"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/rvCatalog"
       />
 </android.support.constraint.ConstraintLayout>
