@@ -11,4 +11,5 @@
 
   <!-- main -->
   <string name="catalog_title">Каталог услуг</string>
+  <string name="catalog_child_title">категории товаров</string>
 </resources>
