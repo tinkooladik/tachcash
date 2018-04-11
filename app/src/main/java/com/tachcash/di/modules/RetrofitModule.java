@@ -32,8 +32,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
-import static com.tachcash.utils.Constants.Headers.LANG;
-import static com.tachcash.utils.Constants.Headers.USER_AGENT;
+import static com.tachcash.utils.Constants.LANG;
+import static com.tachcash.utils.Constants.USER_AGENT;
 
 /**
  * Created by Alexandra on 11/3/2017.

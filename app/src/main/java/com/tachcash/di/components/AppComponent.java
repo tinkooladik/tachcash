@@ -5,7 +5,10 @@ import com.tachcash.base.BaseFragment;
 import com.tachcash.data.DataManager;
 import com.tachcash.di.modules.AppModule;
 import com.tachcash.di.scopes.AppScope;
+import com.tachcash.feature.presenters.CatalogPresenter;
 import com.tachcash.feature.presenters.MainPresenter;
+import com.tachcash.feature.presenters.MapPresenter;
+import com.tachcash.feature.presenters.PaymentPresenter;
 import dagger.Component;
 
 /**
@@ -24,6 +27,13 @@ import dagger.Component;
 
   /* activities */
   void inject(MainPresenter presenter);
+
+  /* fragments */
+  void inject(CatalogPresenter presenter);
+
+  void inject(PaymentPresenter presenter);
+
+  void inject(MapPresenter presenter);
 
   /* adapters */
 

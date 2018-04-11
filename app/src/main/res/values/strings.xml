@@ -3,4 +3,12 @@
 
   <!-- errors -->
   <string name="error_title">Ошибка</string>
+
+  <!-- tabs -->
+  <string name="tab_catalog">каталог</string>
+  <string name="tab_payment">оплата</string>
+  <string name="tab_map">кассы рядом</string>
+
+  <!-- main -->
+  <string name="catalog_title">Каталог услуг</string>
 </resources>
