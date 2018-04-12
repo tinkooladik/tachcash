@@ -6,10 +6,17 @@
 
   <!-- tabs -->
   <string name="tab_catalog">каталог</string>
-  <string name="tab_payment">оплата</string>
+  <string name="tab_payment">корзина</string>
+  <string name="tab_history">история</string>
   <string name="tab_map">кассы рядом</string>
 
   <!-- main -->
   <string name="catalog_title">Каталог услуг</string>
   <string name="catalog_child_title">категории товаров</string>
+  <string name="payment_show_text">Покажите чек кассиру\nдля оплаты</string>
+  <string name="payment_code">tachcashcode: </string>
+  <string name="payment_date">Сформирован %s</string>
+  <string name="payment_to_pay">К оплате</string>
+  <string name="payment_hrn">%s грн</string>
+  <string name="payment_delete">Удалить</string>
 </resources>

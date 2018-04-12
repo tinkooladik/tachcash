@@ -101,4 +101,7 @@ dependencies {
 
   //rv dividers
   implementation 'com.bignerdranch.android:simple-item-decoration:1.0.0'
+
+  //ticket view
+  implementation 'com.vipulasri:ticketview:1.0.5'
 }

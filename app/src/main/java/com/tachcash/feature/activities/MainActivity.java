@@ -15,6 +15,7 @@ import com.tachcash.feature.views.MainView;
 import static com.tachcash.utils.Constants.FRAGMENT_CATALOG;
 import static com.tachcash.utils.Constants.FRAGMENT_MAP;
 import static com.tachcash.utils.Constants.FRAGMENT_PAYMENT;
+import static com.tachcash.utils.ViewUtil.removeShiftMode;
 
 public class MainActivity extends BaseActivity implements MainView {
 
@@ -26,20 +27,10 @@ public class MainActivity extends BaseActivity implements MainView {
     setContentView(R.layout.activity_main);
     super.onCreate(savedInstanceState);
 
-    //String text = "9911111222222222222333333";
-    //MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-    //try {
-    //  BitMatrix bitMatrix = multiFormatWriter.encode(text, BarcodeFormat.CODE_128, 1200, 400);
-    //  BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-    //  Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
-    //  mIv.setImageBitmap(bitmap);
-    //} catch (WriterException e) {
-    //  Timber.e(e);
-    //}
-
     mNavigator.addFragmentTag(this, R.id.container_main, CatalogFragment.newInstance(),
         FRAGMENT_CATALOG);
 
+    removeShiftMode(mBottomNavigationView);
     mBottomNavigationView.setOnNavigationItemSelectedListener(item -> {
       switch (item.getItemId()) {
         case R.id.tab_catalog:
