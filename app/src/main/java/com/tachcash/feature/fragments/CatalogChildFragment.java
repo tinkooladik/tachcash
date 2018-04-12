@@ -3,7 +3,6 @@ package com.tachcash.feature.fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.arellomobile.mvp.presenter.InjectPresenter;
-import com.dgreenhalgh.android.simpleitemdecoration.grid.GridDividerItemDecoration;
 import com.tachcash.R;
 import com.tachcash.base.BaseFragment;
 import com.tachcash.data.remote.models.ServiceParentEntity;
@@ -58,11 +56,6 @@ public class CatalogChildFragment extends BaseFragment implements CatalogChildVi
     mAdapter = new ServiceChildAdapter();
     mRvCatalog.setLayoutManager(new LinearLayoutManager(getContext()));
     mRvCatalog.setAdapter(mAdapter);
-    mRvCatalog.addItemDecoration(new GridDividerItemDecoration(
-        ContextCompat.getDrawable(Objects.requireNonNull(getContext()),
-            R.drawable.list_divider_vertical),
-        ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.list_divider),
-        2));
 
     List<ServiceParentEntity> services = new ArrayList<>();
     services.add(new ServiceParentEntity("Воля"));
