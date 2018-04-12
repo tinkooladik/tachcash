@@ -13,12 +13,16 @@ import com.dgreenhalgh.android.simpleitemdecoration.grid.GridDividerItemDecorati
 import com.tachcash.R;
 import com.tachcash.base.BaseFragment;
 import com.tachcash.data.remote.models.ServiceParentEntity;
+import com.tachcash.feature.activities.MainActivity;
 import com.tachcash.feature.adapters.ServiceParentAdapter;
 import com.tachcash.feature.presenters.CatalogPresenter;
 import com.tachcash.feature.views.CatalogView;
+import com.tachcash.utils.ItemClickSupport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static com.tachcash.utils.Constants.FRAGMENT_CATALOG_CHILD;
 
 /**
  * Created by Alexandra on 11.04.2018.
@@ -62,6 +66,10 @@ public class CatalogFragment extends BaseFragment implements CatalogView {
     services.add(new ServiceParentEntity("Интернет\n" + "провайдеры"));
     services.add(new ServiceParentEntity("Перевод на карту"));
 
+    ItemClickSupport.addTo(mRvCatalog)
+        .setOnItemClickListener((recyclerView, position, v) -> mNavigator.addFragmentTagBackStack(
+            (MainActivity) Objects.requireNonNull(getActivity()), R.id.container_main,
+            CatalogChildFragment.newInstance(services.get(position)), FRAGMENT_CATALOG_CHILD));
     mAdapter.addList(services);
   }
 }
