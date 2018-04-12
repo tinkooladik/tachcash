@@ -14,6 +14,7 @@
   <color name="colorLLightGray">#fdfdfe</color>
   <color name="colorRed">#de4354</color>
   <color name="colorGreen">#58a42c</color>
+  <color name="colorLightBlue">#f3f6f8</color>
 
   <color name="colorTransparent">#00000000</color>
   <color name="colorTransparentWhite">#70ffffff</color>

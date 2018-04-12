@@ -13,10 +13,15 @@
   <!-- main -->
   <string name="catalog_title">Каталог услуг</string>
   <string name="catalog_child_title">категории товаров</string>
+
+  <!-- payment -->
   <string name="payment_show_text">Покажите чек кассиру\nдля оплаты</string>
   <string name="payment_code">tachcashcode: </string>
   <string name="payment_date">Сформирован %s</string>
   <string name="payment_to_pay">К оплате</string>
   <string name="payment_hrn">%s грн</string>
   <string name="payment_delete">Удалить</string>
+  <string name="payment_amount">Сумма:</string>
+  <string name="payment_create">Создать шаблон</string>
+  <string name="payment_templates">Шаблоны</string>
 </resources>

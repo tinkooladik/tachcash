@@ -13,9 +13,10 @@
       android:layout_height="wrap_content"
       android:layout_marginEnd="8dp"
       android:layout_marginStart="8dp"
+      android:layout_marginTop="53dp"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/llCreate"
       >
     <com.vipulasri.ticketview.TicketView
         android:id="@+id/ticketView"
@@ -118,11 +119,63 @@
         app:layout_constraintTop_toBottomOf="@id/tvDate"
         />
   </android.support.constraint.ConstraintLayout>
+  <LinearLayout
+      android:id="@+id/llCreate"
+      android:orientation="horizontal"
+      android:background="@drawable/shape_button_bg_white"
+      android:layout_width="0dp"
+      android:layout_height="56dp"
+      android:gravity="center"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/llTemplates"
+      >
+    <ImageView
+        android:layout_width="38dp"
+        android:layout_height="24dp"
+        android:src="@drawable/barcode"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/payment_create"
+        android:textSize="18sp"
+        android:fontFamily="@font/circe_regular"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorDarkGray"
+        />
+  </LinearLayout>
+  <LinearLayout
+      android:id="@+id/llTemplates"
+      android:orientation="horizontal"
+      android:background="@drawable/shape_button_bg_accent"
+      android:layout_width="0dp"
+      android:layout_height="56dp"
+      android:gravity="center"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toEndOf="@id/llCreate"
+      >
+    <ImageView
+        android:layout_width="38dp"
+        android:layout_height="24dp"
+        android:src="@drawable/template"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/payment_templates"
+        android:textSize="18sp"
+        android:fontFamily="@font/circe_regular"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/colorAlmostWhite"
+        />
+  </LinearLayout>
 
   <android.support.v7.widget.CardView
       android:id="@+id/cvService"
       android:layout_width="0dp"
-      android:layout_height="50dp"
+      android:layout_height="60dp"
       android:layout_marginEnd="14dp"
       android:layout_marginStart="14dp"
       android:layout_marginTop="16dp"
@@ -131,7 +184,88 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@id/clTicket"
       >
-
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLightBlue"
+        >
+      <ImageView
+          android:id="@+id/ivServiceIcon"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_margin="8dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintDimensionRatio="h,1:1"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          />
+      <TextView
+          android:id="@+id/tvServiceName"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="8dp"
+          android:fontFamily="@font/circe_bold"
+          android:textColor="@color/colorGray"
+          app:layout_constraintBottom_toTopOf="@id/tvAccount"
+          app:layout_constraintStart_toEndOf="@+id/ivServiceIcon"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_chainStyle="packed"
+          tools:text="Popolnenie mobilnogo"
+          />
+      <TextView
+          android:id="@+id/tvAccount"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="8dp"
+          android:fontFamily="@font/century_gothic"
+          android:textColor="@color/colorAlmostBlack"
+          android:textSize="16sp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toEndOf="@+id/ivServiceIcon"
+          app:layout_constraintTop_toBottomOf="@id/tvServiceName"
+          tools:text="+380 95 422 69 77"
+          />
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="0dp"
+          android:background="@drawable/shape_rounded_side"
+          android:gravity="center_vertical"
+          android:orientation="vertical"
+          android:paddingStart="8dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/century_gothic"
+            android:text="@string/payment_amount"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAlmostBlack"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivServiceIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvServiceName"
+            />
+        <TextView
+            android:id="@+id/tvSum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/century_gothic"
+            android:textColor="@color/colorAlmostBlack"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivServiceIcon"
+            app:layout_constraintTop_toBottomOf="@id/tvServiceName"
+            tools:text="80 hrn"
+            />
+      </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
   </android.support.v7.widget.CardView>
   <View
       android:layout_width="0dp"
@@ -181,8 +315,8 @@
         android:id="@+id/ivDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/rubbish_bin"
         android:layout_gravity="center_vertical"
+        app:srcCompat="@drawable/rubbish_bin"
         />
     <TextView
         android:id="@+id/tvDelete"
