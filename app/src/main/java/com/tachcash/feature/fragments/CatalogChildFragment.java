@@ -15,6 +15,7 @@ import com.tachcash.R;
 import com.tachcash.base.BaseFragment;
 import com.tachcash.data.remote.models.ServiceChildren;
 import com.tachcash.data.remote.models.ServiceParent;
+import com.tachcash.feature.activities.MainActivity;
 import com.tachcash.feature.adapters.ServiceChildAdapter;
 import com.tachcash.feature.presenters.CatalogChildPresenter;
 import com.tachcash.feature.views.CatalogChildView;
@@ -58,7 +59,7 @@ public class CatalogChildFragment extends BaseFragment implements CatalogChildVi
 
     mCatalogChildPresenter.getAllServicesChild(mServiceParent.getId());
 
-    mAdapter = new ServiceChildAdapter(mRvCatalog);
+    mAdapter = new ServiceChildAdapter(mRvCatalog, mNavigator, (MainActivity) getActivity());
     mRvCatalog.setLayoutManager(new LinearLayoutManager(getContext()));
     mRvCatalog.setAdapter(mAdapter);
 

@@ -8,13 +8,13 @@ import com.tachcash.R;
 import com.tachcash.base.BaseActivity;
 import com.tachcash.feature.fragments.CatalogFragment;
 import com.tachcash.feature.fragments.MapFragment;
-import com.tachcash.feature.fragments.PaymentFragment;
+import com.tachcash.feature.fragments.TemplatesFragment;
 import com.tachcash.feature.presenters.MainPresenter;
 import com.tachcash.feature.views.MainView;
 
 import static com.tachcash.utils.Constants.FRAGMENT_CATALOG;
 import static com.tachcash.utils.Constants.FRAGMENT_MAP;
-import static com.tachcash.utils.Constants.FRAGMENT_PAYMENT;
+import static com.tachcash.utils.Constants.FRAGMENT_TEMPLATES;
 import static com.tachcash.utils.ViewUtil.removeShiftMode;
 
 public class MainActivity extends BaseActivity implements MainView {
@@ -39,7 +39,11 @@ public class MainActivity extends BaseActivity implements MainView {
           break;
         case R.id.tab_payment:
           mNavigator.replaceFragmentTagNotCopy(this, R.id.container_main,
-              PaymentFragment.newInstance(), FRAGMENT_PAYMENT);
+              TemplatesFragment.newInstance(), FRAGMENT_TEMPLATES);
+          break;
+        case R.id.tab_history:
+          mNavigator.replaceFragmentTagNotCopy(this, R.id.container_main, MapFragment.newInstance(),
+              FRAGMENT_MAP);
           break;
         case R.id.tab_map:
           mNavigator.replaceFragmentTagNotCopy(this, R.id.container_main, MapFragment.newInstance(),
@@ -47,5 +51,9 @@ public class MainActivity extends BaseActivity implements MainView {
       }
       return true;
     });
+  }
+
+  public void selectPaymentTab() {
+    mBottomNavigationView.setSelectedItemId(R.id.tab_payment);
   }
 }

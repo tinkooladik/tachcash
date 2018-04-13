@@ -30,4 +30,7 @@
   <string name="payment_amount_title">Сумма, грн</string>
   <string name="payment_amount_hint">Введите сумму</string>
   <string name="payment_go_to_payment">Перейти к оплате</string>
+
+  <!-- templates -->
+  <string name="templates_title">Шаблоны</string>
 </resources>

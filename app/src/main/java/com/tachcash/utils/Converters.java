@@ -45,36 +45,9 @@ public class Converters {
     return "";
   }
 
-  public static String hideEmail(String email) {
-    if (email.length() >= 4) {
-      StringBuilder sb = new StringBuilder(email);
-      for (int i = 2; i < sb.lastIndexOf(".") - 2; ++i) {
-        if (sb.charAt(i) != '@') {
-          sb.setCharAt(i, '*');
-        }
-      }
-      return sb.toString();
-    }
-    return email;
-  }
-
-  public static String hidePhone(String phone) {
-    if (phone.length() >= 4) {
-      return "*" + phone.substring(phone.length() - 3, phone.length());
-    }
-    return phone;
-  }
-
-  public static String refactoringPhone(String phone) {
-    String refPhone = phone.replaceAll(" ", "");
-    if (refPhone.length() >= 10) {
-      refPhone = refPhone.substring(refPhone.length() - 10);
-      StringBuilder str = new StringBuilder(refPhone);
-      str.insert(0, "38");
-      refPhone = str.toString();
-    } else {
-      refPhone = "";
-    }
-    return refPhone;
+  public static String getFormattedDateFromTimestamp(Long timestampInMilliSeconds) {
+    Date date = new Date();
+    date.setTime(timestampInMilliSeconds);
+    return new SimpleDateFormat("hh:mm, d.MM.yy", Locale.getDefault()).format(date);
   }
 }

@@ -2,22 +2,32 @@ package com.tachcash.feature.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.tachcash.R;
+import com.tachcash.base.Navigator;
+import com.tachcash.data.local.model.TemplateEntity;
 import com.tachcash.data.remote.models.ServiceChildren;
+import com.tachcash.feature.activities.MainActivity;
+import com.tachcash.feature.fragments.PaymentFragment;
 import com.tachcash.utils.GlideApp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import net.cachapa.expandablelayout.ExpandableLayout;
 
+import static com.tachcash.utils.Constants.FRAGMENT_PAYMENT;
+import static com.tachcash.utils.Converters.getFormattedDateFromTimestamp;
 import static com.tachcash.utils.ViewUtil.dpToPx;
 
 /**
@@ -31,9 +41,14 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
   private int mLastPos;
   private int mPadding = dpToPx(16);
   private int mVerticalPadding = dpToPx(4);
+  private Navigator mNavigator;
+  private AppCompatActivity mActivity;
 
-  public ServiceChildAdapter(RecyclerView recyclerView) {
+  public ServiceChildAdapter(RecyclerView recyclerView, Navigator navigator,
+      AppCompatActivity activity) {
     mRecyclerView = recyclerView;
+    mNavigator = navigator;
+    mActivity = activity;
   }
 
   public void addList(List<ServiceChildren> listData) {
@@ -85,6 +100,8 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
     @BindView(R.id.tvName) TextView mTvName;
     @BindView(R.id.expandable_layout) ExpandableLayout mExpandableLayout;
     @BindView(R.id.clParent) ConstraintLayout mClParent;
+    @BindView(R.id.etAccount) EditText mEtAccount;
+    @BindView(R.id.etAmount) EditText mEtAmount;
 
     ViewHolder(View view) {
       super(view);
@@ -92,11 +109,21 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
     }
 
     @OnClick(R.id.btnCreateTemplate) public void onClickTemplate() {
-
+      Toast.makeText(mRecyclerView.getContext(), "Шаблон сохранен!", Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R.id.btnGoToPayment) public void onCLickPayment() {
-
+      ((MainActivity) mActivity).selectPaymentTab();
+      TemplateEntity templateEntity = new TemplateEntity();
+      templateEntity.setService(mListData.get(getAdapterPosition()).getId());
+      templateEntity.setAccount(Long.parseLong(mEtAccount.getText().toString()));
+      templateEntity.setAmount(Integer.parseInt(mEtAmount.getText().toString()));
+      templateEntity.setServiceName(mListData.get(getAdapterPosition()).getName());
+      templateEntity.setDate(getFormattedDateFromTimestamp(System.currentTimeMillis()));
+      templateEntity.setIcon(mListData.get(getAdapterPosition()).getLogo());
+      templateEntity.setTachcashCode(String.valueOf(new Random().nextInt(5000)));
+      mNavigator.replaceFragmentTagNotCopy(mActivity, R.id.container_main,
+          PaymentFragment.newInstance(templateEntity), FRAGMENT_PAYMENT);
     }
   }
 }

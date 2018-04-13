@@ -10,6 +10,7 @@ import com.tachcash.feature.presenters.CatalogPresenter;
 import com.tachcash.feature.presenters.MainPresenter;
 import com.tachcash.feature.presenters.MapPresenter;
 import com.tachcash.feature.presenters.PaymentPresenter;
+import com.tachcash.feature.presenters.TemplatesPresenter;
 import dagger.Component;
 
 /**
@@ -37,6 +38,8 @@ import dagger.Component;
   void inject(MapPresenter presenter);
 
   void inject(CatalogChildPresenter presenter);
+
+  void inject(TemplatesPresenter presenter);
 
   /* adapters */
 

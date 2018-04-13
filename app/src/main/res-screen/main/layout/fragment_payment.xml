@@ -126,6 +126,7 @@
       android:layout_width="0dp"
       android:layout_height="56dp"
       android:background="@drawable/shape_button_bg_white"
+      android:foreground="?attr/selectableItemBackground"
       android:gravity="center"
       android:orientation="horizontal"
       app:layout_constraintEnd_toStartOf="@id/llTemplates"
@@ -152,6 +153,7 @@
       android:layout_width="0dp"
       android:layout_height="56dp"
       android:background="@drawable/shape_button_bg_accent"
+      android:foreground="?attr/selectableItemBackground"
       android:gravity="center"
       android:orientation="horizontal"
       app:layout_constraintEnd_toEndOf="parent"
@@ -193,11 +195,10 @@
         >
       <ImageView
           android:id="@+id/ivServiceIcon"
-          android:layout_width="0dp"
-          android:layout_height="0dp"
-          android:layout_margin="8dp"
+          android:layout_width="36dp"
+          android:layout_height="36dp"
+          android:layout_marginStart="8dp"
           app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintDimensionRatio="h,1:1"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
           />
@@ -307,6 +308,7 @@
       android:id="@+id/llDelete"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:foreground="?attr/selectableItemBackground"
       android:orientation="horizontal"
       android:padding="8dp"
       app:layout_constraintEnd_toEndOf="@+id/tvAmount"

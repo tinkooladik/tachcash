@@ -15,11 +15,13 @@ public class Constants {
 
   /** argument keys */
   public static final String SERVICE_PARENT = "SERVICE_PARENT";
+  public static final String TEMPLATE_ENTITY = "TEMPLATE_ENTITY";
 
   /** fragments */
   public static final String FRAGMENT_CATALOG = "FRAGMENT_CATALOG";
   public static final String FRAGMENT_CATALOG_CHILD = "FRAGMENT_CATALOG_CHILD";
   public static final String FRAGMENT_PAYMENT = "FRAGMENT_PAYMENT";
+  public static final String FRAGMENT_TEMPLATES = "FRAGMENT_TEMPLATES";
   public static final String FRAGMENT_MAP = "FRAGMENT_MAP";
 
   /** headers */
