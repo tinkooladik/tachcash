@@ -64,5 +64,6 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/clTitle"
       tools:listitem="@layout/item_service_child"
+      android:layout_marginBottom="56dp"
       />
 </android.support.constraint.ConstraintLayout>

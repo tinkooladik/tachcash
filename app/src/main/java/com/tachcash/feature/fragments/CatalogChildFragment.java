@@ -16,6 +16,7 @@ import com.tachcash.data.remote.models.ServiceParentEntity;
 import com.tachcash.feature.adapters.ServiceChildAdapter;
 import com.tachcash.feature.presenters.CatalogChildPresenter;
 import com.tachcash.feature.views.CatalogChildView;
+import com.tachcash.utils.ItemClickSupport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -53,7 +54,7 @@ public class CatalogChildFragment extends BaseFragment implements CatalogChildVi
     mServiceParentEntity = Objects.requireNonNull(getArguments()).getParcelable(SERVICE_PARENT);
     mTvTitle.setText(Objects.requireNonNull(mServiceParentEntity).getName());
 
-    mAdapter = new ServiceChildAdapter();
+    mAdapter = new ServiceChildAdapter(mRvCatalog);
     mRvCatalog.setLayoutManager(new LinearLayoutManager(getContext()));
     mRvCatalog.setAdapter(mAdapter);
 
@@ -66,6 +67,10 @@ public class CatalogChildFragment extends BaseFragment implements CatalogChildVi
     services.add(new ServiceParentEntity("Воля-кабель"));
     services.add(new ServiceParentEntity("Воля"));
     services.add(new ServiceParentEntity("Воля"));
+
+    ItemClickSupport.addTo(mRvCatalog).setOnItemClickListener((recyclerView, position, v) -> {
+      mAdapter.setSelected(position);
+    });
 
     mAdapter.addList(services);
   }

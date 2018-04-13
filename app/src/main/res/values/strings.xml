@@ -24,4 +24,9 @@
   <string name="payment_amount">Сумма:</string>
   <string name="payment_create">Создать шаблон</string>
   <string name="payment_templates">Шаблоны</string>
+  <string name="payment_account_title">Номер договора</string>
+  <string name="payment_account_hint">Введите номер договора</string>
+  <string name="payment_amount_title">Сумма, грн</string>
+  <string name="payment_amount_hint">Введите сумму</string>
+  <string name="payment_go_to_payment">Перейти к оплате</string>
 </resources>
