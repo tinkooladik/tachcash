@@ -14,16 +14,18 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.tachcash.App;
 import com.tachcash.R;
 import com.tachcash.base.Navigator;
+import com.tachcash.data.DataManager;
 import com.tachcash.data.local.model.TemplateEntity;
 import com.tachcash.data.remote.models.ServiceChildren;
-import com.tachcash.feature.activities.MainActivity;
 import com.tachcash.feature.fragments.PaymentFragment;
 import com.tachcash.utils.GlideApp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import javax.inject.Inject;
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import static com.tachcash.utils.Constants.FRAGMENT_PAYMENT;
@@ -36,6 +38,8 @@ import static com.tachcash.utils.ViewUtil.dpToPx;
 
 public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapter.ViewHolder> {
 
+  @Inject DataManager mDataManager;
+
   private ArrayList<ServiceChildren> mListData = new ArrayList<>();
   private RecyclerView mRecyclerView;
   private int mLastPos;
@@ -46,6 +50,7 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
 
   public ServiceChildAdapter(RecyclerView recyclerView, Navigator navigator,
       AppCompatActivity activity) {
+    App.getAppComponent().inject(this);
     mRecyclerView = recyclerView;
     mNavigator = navigator;
     mActivity = activity;
@@ -109,11 +114,16 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
     }
 
     @OnClick(R.id.btnCreateTemplate) public void onClickTemplate() {
+      mDataManager.saveTemplate(createTemplate());
       Toast.makeText(mRecyclerView.getContext(), "Шаблон сохранен!", Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R.id.btnGoToPayment) public void onCLickPayment() {
-      ((MainActivity) mActivity).selectPaymentTab();
+      mNavigator.replaceFragmentTagNotCopy(mActivity, R.id.container_main,
+          PaymentFragment.newInstance(createTemplate()), FRAGMENT_PAYMENT);
+    }
+
+    private TemplateEntity createTemplate() {
       TemplateEntity templateEntity = new TemplateEntity();
       templateEntity.setService(mListData.get(getAdapterPosition()).getId());
       templateEntity.setAccount(Long.parseLong(mEtAccount.getText().toString()));
@@ -122,8 +132,7 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
       templateEntity.setDate(getFormattedDateFromTimestamp(System.currentTimeMillis()));
       templateEntity.setIcon(mListData.get(getAdapterPosition()).getLogo());
       templateEntity.setTachcashCode(String.valueOf(new Random().nextInt(5000)));
-      mNavigator.replaceFragmentTagNotCopy(mActivity, R.id.container_main,
-          PaymentFragment.newInstance(templateEntity), FRAGMENT_PAYMENT);
+      return templateEntity;
     }
   }
 }

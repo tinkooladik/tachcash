@@ -3,6 +3,7 @@ package com.tachcash.data;
 import android.content.Context;
 import com.tachcash.App;
 import com.tachcash.data.local.PreferencesHelper;
+import com.tachcash.data.local.model.TemplateEntity;
 import com.tachcash.data.remote.apis.InfoService;
 import com.tachcash.data.remote.models.ServiceChildren;
 import com.tachcash.data.remote.models.ServiceParent;
@@ -73,5 +74,14 @@ public class DataManager {
     map.put(HEADER_X_AUTH_SIGN, getMD5sign(mPref.getToken(), SYSTEM_REG, mPref.getSecret()));
     map.put(HEADER_X_AUTH_REGN, SYSTEM_REG);
     return map;
+  }
+
+  public void saveTemplate(TemplateEntity templateEntity) {
+    List<TemplateEntity> templateEntities = getTemplates();
+    mPref.saveTemplate(templateEntity);
+  }
+
+  public List<TemplateEntity> getTemplates() {
+    return mPref.getTemplates();
   }
 }

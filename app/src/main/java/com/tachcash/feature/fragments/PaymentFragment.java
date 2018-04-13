@@ -96,10 +96,12 @@ public class PaymentFragment extends BaseFragment implements PaymentView {
   }
 
   @OnClick(R.id.llCreate) public void onMLlCreateClicked() {
+    mPaymentPresenter.saveTemplate(mTemplate);
     showToastMessage("Шаблон сохранен!");
   }
 
   @OnClick(R.id.llTemplates) public void onMLlTemplatesClicked() {
+    ((MainActivity) getActivity()).selectPaymentTab();
     mNavigator.replaceFragmentTagNotCopy((MainActivity) Objects.requireNonNull(getActivity()),
         R.id.container_main, TemplatesFragment.newInstance(), FRAGMENT_TEMPLATES);
   }

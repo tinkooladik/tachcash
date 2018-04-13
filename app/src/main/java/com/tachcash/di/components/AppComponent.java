@@ -5,6 +5,7 @@ import com.tachcash.base.BaseFragment;
 import com.tachcash.data.DataManager;
 import com.tachcash.di.modules.AppModule;
 import com.tachcash.di.scopes.AppScope;
+import com.tachcash.feature.adapters.ServiceChildAdapter;
 import com.tachcash.feature.presenters.CatalogChildPresenter;
 import com.tachcash.feature.presenters.CatalogPresenter;
 import com.tachcash.feature.presenters.MainPresenter;
@@ -42,6 +43,7 @@ import dagger.Component;
   void inject(TemplatesPresenter presenter);
 
   /* adapters */
+  void inject(ServiceChildAdapter adapter);
 
   /* service */
 }
