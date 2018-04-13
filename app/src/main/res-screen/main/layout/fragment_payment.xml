@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorLightGray"
+    android:clickable="true"
+    android:focusable="true"
     >
   <android.support.constraint.ConstraintLayout
       android:id="@+id/clTicket"
@@ -121,14 +123,14 @@
   </android.support.constraint.ConstraintLayout>
   <LinearLayout
       android:id="@+id/llCreate"
-      android:orientation="horizontal"
-      android:background="@drawable/shape_button_bg_white"
       android:layout_width="0dp"
       android:layout_height="56dp"
+      android:background="@drawable/shape_button_bg_white"
       android:gravity="center"
+      android:orientation="horizontal"
+      app:layout_constraintEnd_toStartOf="@id/llTemplates"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintEnd_toStartOf="@id/llTemplates"
       >
     <ImageView
         android:layout_width="38dp"
@@ -138,23 +140,23 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/payment_create"
-        android:textSize="18sp"
-        android:fontFamily="@font/circe_regular"
         android:layout_marginStart="8dp"
+        android:fontFamily="@font/circe_regular"
+        android:text="@string/payment_create"
         android:textColor="@color/colorDarkGray"
+        android:textSize="18sp"
         />
   </LinearLayout>
   <LinearLayout
       android:id="@+id/llTemplates"
-      android:orientation="horizontal"
-      android:background="@drawable/shape_button_bg_accent"
       android:layout_width="0dp"
       android:layout_height="56dp"
+      android:background="@drawable/shape_button_bg_accent"
       android:gravity="center"
+      android:orientation="horizontal"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toEndOf="@id/llCreate"
+      app:layout_constraintTop_toTopOf="parent"
       >
     <ImageView
         android:layout_width="38dp"
@@ -164,11 +166,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/payment_templates"
-        android:textSize="18sp"
-        android:fontFamily="@font/circe_regular"
         android:layout_marginStart="8dp"
+        android:fontFamily="@font/circe_regular"
+        android:text="@string/payment_templates"
         android:textColor="@color/colorAlmostWhite"
+        android:textSize="18sp"
         />
   </LinearLayout>
 

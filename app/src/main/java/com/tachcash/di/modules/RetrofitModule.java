@@ -15,7 +15,6 @@ import io.reactivex.schedulers.Schedulers;
 import java.io.File;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Named;
 import okhttp3.Cache;
@@ -104,8 +103,7 @@ import static com.tachcash.utils.Constants.LANG;
             ? AUTH_API_KEY_TEST : AUTH_APP_KEY_LIVE;
     return chain -> {
       Request original = chain.request();
-      Request request = original.newBuilder()
-          .header(LANG, Locale.getDefault().getLanguage())
+      Request request = original.newBuilder().header(LANG, "ru")
           .header(HEADER_ACCEPT_KEY, HEADER_ACCEPT_VALUE)
           .header(HEADER_USER_AGENT, userAgent)
           .header(HEADER_X_API_VERSION, API_VERSION)
