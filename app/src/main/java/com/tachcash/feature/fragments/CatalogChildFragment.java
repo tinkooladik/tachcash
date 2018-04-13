@@ -6,19 +6,19 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.tachcash.R;
 import com.tachcash.base.BaseFragment;
+import com.tachcash.data.remote.models.ServiceChildren;
 import com.tachcash.data.remote.models.ServiceParent;
-import com.tachcash.data.remote.models.ServiceParentEntity;
 import com.tachcash.feature.adapters.ServiceChildAdapter;
 import com.tachcash.feature.presenters.CatalogChildPresenter;
 import com.tachcash.feature.views.CatalogChildView;
 import com.tachcash.utils.ItemClickSupport;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,6 +33,7 @@ public class CatalogChildFragment extends BaseFragment implements CatalogChildVi
 
   @BindView(R.id.rvCatalogChild) RecyclerView mRvCatalog;
   @BindView(R.id.tvServiceName) TextView mTvTitle;
+  @BindView(R.id.pbProgress) ProgressBar mProgressBar;
 
   private ServiceChildAdapter mAdapter;
   private ServiceParent mServiceParent;
@@ -55,28 +56,30 @@ public class CatalogChildFragment extends BaseFragment implements CatalogChildVi
     mServiceParent = Objects.requireNonNull(getArguments()).getParcelable(SERVICE_PARENT);
     mTvTitle.setText(Objects.requireNonNull(mServiceParent).getTitle());
 
+    mCatalogChildPresenter.getAllServicesChild(mServiceParent.getId());
+
     mAdapter = new ServiceChildAdapter(mRvCatalog);
     mRvCatalog.setLayoutManager(new LinearLayoutManager(getContext()));
     mRvCatalog.setAdapter(mAdapter);
 
-    List<ServiceParentEntity> services = new ArrayList<>();
-    services.add(new ServiceParentEntity("Воля"));
-    services.add(new ServiceParentEntity("Воля-кабель"));
-    services.add(new ServiceParentEntity("Воля"));
-    services.add(new ServiceParentEntity("Воля"));
-    services.add(new ServiceParentEntity("Воля-кабель"));
-    services.add(new ServiceParentEntity("Воля-кабель"));
-    services.add(new ServiceParentEntity("Воля"));
-    services.add(new ServiceParentEntity("Воля"));
-
     ItemClickSupport.addTo(mRvCatalog).setOnItemClickListener((recyclerView, position, v) -> {
       mAdapter.setSelected(position);
     });
-
-    mAdapter.addList(services);
   }
 
   @OnClick(R.id.ivBack) public void onViewClicked() {
     Objects.requireNonNull(getActivity()).onBackPressed();
+  }
+
+  @Override public void setProgressVisible(boolean visible) {
+    mProgressBar.setVisibility(visible ? View.VISIBLE : View.GONE);
+  }
+
+  @Override public void setUpServices(List<ServiceChildren> services) {
+    mAdapter.addList(services);
+  }
+
+  @Override public void showDialogError(String error) {
+    showErrorMessage(error);
   }
 }

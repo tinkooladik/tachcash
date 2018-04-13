@@ -7,6 +7,14 @@ package com.tachcash.feature.views;
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
+import com.tachcash.data.remote.models.ServiceChildren;
+import java.util.List;
 
 @StateStrategyType(AddToEndSingleStrategy.class) public interface CatalogChildView extends MvpView {
+
+  void setProgressVisible(boolean visible);
+
+  void setUpServices(List<ServiceChildren> services);
+
+  void showDialogError(String error);
 }

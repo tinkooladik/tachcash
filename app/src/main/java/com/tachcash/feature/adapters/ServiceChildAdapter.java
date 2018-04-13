@@ -12,7 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.tachcash.R;
-import com.tachcash.data.remote.models.ServiceParentEntity;
+import com.tachcash.data.remote.models.ServiceChildren;
 import com.tachcash.utils.GlideApp;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import static com.tachcash.utils.ViewUtil.dpToPx;
 
 public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapter.ViewHolder> {
 
-  private ArrayList<ServiceParentEntity> mListData = new ArrayList<>();
+  private ArrayList<ServiceChildren> mListData = new ArrayList<>();
   private RecyclerView mRecyclerView;
   private int mLastPos;
   private int mPadding = dpToPx(16);
@@ -36,7 +36,7 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
     mRecyclerView = recyclerView;
   }
 
-  public void addList(List<ServiceParentEntity> listData) {
+  public void addList(List<ServiceChildren> listData) {
     mListData.clear();
     mListData.addAll(listData);
     mLastPos = mListData.size() - 1;
@@ -53,6 +53,9 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
   @Override
   public void onBindViewHolder(@NonNull ServiceChildAdapter.ViewHolder holder, int position) {
     holder.mTvName.setText(mListData.get(position).getName());
+    GlideApp.with(holder.mIvIcon.getContext())
+        .load(mListData.get(position).getLogo())
+        .into(holder.mIvIcon);
 
     if (position == 0) {
       holder.mClParent.setPadding(mPadding, mPadding, mPadding, mVerticalPadding);
