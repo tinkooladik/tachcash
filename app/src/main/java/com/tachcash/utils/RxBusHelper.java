@@ -6,4 +6,8 @@ package com.tachcash.utils;
 
 public class RxBusHelper {
 
+  public static class UpdateTemplates {
+
+  }
+
 }

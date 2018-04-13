@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.tachcash.data.local.model.TemplateEntity;
 import java.util.ArrayList;
 import java.util.Arrays;
+import timber.log.Timber;
 
 /**
  * Created by Alexandra on 11/3/2017.
@@ -43,6 +44,12 @@ public class PreferencesHelper {
   public void saveTemplate(TemplateEntity templateEntity) {
     ArrayList<TemplateEntity> templateEntities = getTemplates();
     templateEntities.add(templateEntity);
+    mPreferences.edit().putString(TEMPLATES, (new Gson()).toJson(templateEntities)).apply();
+  }
+
+  public void deleteTemplate(TemplateEntity templateEntity) {
+    ArrayList<TemplateEntity> templateEntities = getTemplates();
+    Timber.e("removed? " + templateEntities.remove(templateEntity));
     mPreferences.edit().putString(TEMPLATES, (new Gson()).toJson(templateEntities)).apply();
   }
 

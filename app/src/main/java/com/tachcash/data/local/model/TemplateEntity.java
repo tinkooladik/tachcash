@@ -119,4 +119,15 @@ public class TemplateEntity implements Parcelable {
   public void setServiceName(String serviceName) {
     mServiceName = serviceName;
   }
+
+  @Override public boolean equals(Object obj) {
+    TemplateEntity o2 = (TemplateEntity) obj;
+    return getService() == o2.getService()
+        && getAccount().equals(o2.getAccount())
+        && getAmount() == o2.getAmount()
+        && getDate().equals(o2.getDate())
+        && getTachcashCode().equals(o2.getTachcashCode())
+        && getIcon().equals(o2.getIcon())
+        && getServiceName().equals(o2.getServiceName());
+  }
 }

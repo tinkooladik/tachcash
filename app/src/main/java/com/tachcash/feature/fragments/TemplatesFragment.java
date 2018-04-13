@@ -17,6 +17,7 @@ import com.tachcash.feature.presenters.TemplatesPresenter;
 import com.tachcash.feature.views.TemplatesView;
 import com.tachcash.utils.ItemClickSupport;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import static com.tachcash.utils.Constants.FRAGMENT_PAYMENT;
@@ -31,6 +32,7 @@ public class TemplatesFragment extends BaseFragment implements TemplatesView {
   @BindView(R.id.rvTemplates) RecyclerView mRvTemplates;
 
   private TemplatesAdapter mAdapter;
+  private ArrayList<TemplateEntity> mTemplates = new ArrayList<>();
 
   public TemplatesFragment() {
     super(R.layout.fragment_templates);
@@ -50,12 +52,15 @@ public class TemplatesFragment extends BaseFragment implements TemplatesView {
     mAdapter = new TemplatesAdapter();
     mRvTemplates.setAdapter(mAdapter);
 
-    ArrayList<TemplateEntity> templateEntities = new ArrayList<>(mPaymentPresenter.getTemplates());
-    mAdapter.addList(templateEntities);
-
     ItemClickSupport.addTo(mRvTemplates)
-        .setOnItemClickListener((recyclerView, position, v) -> mNavigator.replaceFragmentTagNotCopy(
+        .setOnItemClickListener((recyclerView, position, v) -> mNavigator.addFragmentTagBackStack(
             (MainActivity) Objects.requireNonNull(getActivity()), R.id.container_main,
-            PaymentFragment.newInstance(templateEntities.get(position)), FRAGMENT_PAYMENT));
+            PaymentFragment.newInstance(mTemplates.get(position)), FRAGMENT_PAYMENT));
+  }
+
+  @Override public void setUpTemplates(List<TemplateEntity> templates) {
+    mTemplates.clear();
+    mTemplates.addAll(templates);
+    mAdapter.addList(mTemplates);
   }
 }

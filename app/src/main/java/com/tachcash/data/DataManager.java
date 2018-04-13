@@ -77,8 +77,11 @@ public class DataManager {
   }
 
   public void saveTemplate(TemplateEntity templateEntity) {
-    List<TemplateEntity> templateEntities = getTemplates();
     mPref.saveTemplate(templateEntity);
+  }
+
+  public void deleteTemplate(TemplateEntity templateEntity) {
+    mPref.deleteTemplate(templateEntity);
   }
 
   public List<TemplateEntity> getTemplates() {

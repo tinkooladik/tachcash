@@ -90,6 +90,12 @@ public class Navigator {
     }
   }
 
+  public void replaceFragmentTag(@NonNull AppCompatActivity appCompatActivity,
+      @IdRes int containerId, @NonNull Fragment fragment, @NonNull String fragmentTag) {
+    FragmentManager fragmentManager = appCompatActivity.getSupportFragmentManager();
+    fragmentManager.beginTransaction().replace(containerId, fragment, fragmentTag).commit();
+  }
+
   public void clearBackStack(@NonNull AppCompatActivity activity) {
     if (!isEmptyBackStack(activity)) {
       activity.getSupportFragmentManager()
