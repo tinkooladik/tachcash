@@ -10,6 +10,7 @@
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
     android:foreground="?attr/selectableItemBackground"
+    android:id="@+id/clParent"
     >
   <android.support.constraint.ConstraintLayout
       android:layout_width="0dp"

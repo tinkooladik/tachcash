@@ -1,6 +1,7 @@
 package com.tachcash.feature.adapters;
 
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import net.cachapa.expandablelayout.ExpandableLayout;
 
+import static com.tachcash.utils.ViewUtil.dpToPx;
+
 /**
  * Created by Alexandra on 11/8/2017.
  */
@@ -25,6 +28,9 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
 
   private ArrayList<ServiceParentEntity> mListData = new ArrayList<>();
   private RecyclerView mRecyclerView;
+  private int mLastPos;
+  private int mPadding = dpToPx(16);
+  private int mVerticalPadding = dpToPx(4);
 
   public ServiceChildAdapter(RecyclerView recyclerView) {
     mRecyclerView = recyclerView;
@@ -33,6 +39,7 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
   public void addList(List<ServiceParentEntity> listData) {
     mListData.clear();
     mListData.addAll(listData);
+    mLastPos = mListData.size() - 1;
     notifyDataSetChanged();
   }
 
@@ -46,6 +53,14 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
   @Override
   public void onBindViewHolder(@NonNull ServiceChildAdapter.ViewHolder holder, int position) {
     holder.mTvName.setText(mListData.get(position).getName());
+
+    if (position == 0) {
+      holder.mClParent.setPadding(mPadding, mPadding, mPadding, mVerticalPadding);
+    } else if (position == mLastPos) {
+      holder.mClParent.setPadding(mPadding, mVerticalPadding, mPadding, mPadding);
+    } else {
+      holder.mClParent.setPadding(mPadding, mVerticalPadding, mPadding, mVerticalPadding);
+    }
   }
 
   public void setSelected(int selectedPos) {
@@ -66,6 +81,7 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
     @BindView(R.id.ivArrow) AppCompatImageView mIvArrow;
     @BindView(R.id.tvName) TextView mTvName;
     @BindView(R.id.expandable_layout) ExpandableLayout mExpandableLayout;
+    @BindView(R.id.clParent) ConstraintLayout mClParent;
 
     ViewHolder(View view) {
       super(view);
