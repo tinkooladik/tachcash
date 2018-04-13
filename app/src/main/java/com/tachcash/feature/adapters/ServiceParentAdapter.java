@@ -10,7 +10,8 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.tachcash.R;
-import com.tachcash.data.remote.models.ServiceParentEntity;
+import com.tachcash.data.remote.models.ServiceParent;
+import com.tachcash.utils.GlideApp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,9 +20,9 @@ import java.util.List;
  */
 
 public class ServiceParentAdapter extends RecyclerView.Adapter<ServiceParentAdapter.ViewHolder> {
-  private ArrayList<ServiceParentEntity> mListData = new ArrayList<>();
+  private ArrayList<ServiceParent> mListData = new ArrayList<>();
 
-  public void addList(List<ServiceParentEntity> listData) {
+  public void addList(List<ServiceParent> listData) {
     mListData.clear();
     mListData.addAll(listData);
     notifyDataSetChanged();
@@ -36,7 +37,14 @@ public class ServiceParentAdapter extends RecyclerView.Adapter<ServiceParentAdap
 
   @Override
   public void onBindViewHolder(@NonNull ServiceParentAdapter.ViewHolder holder, int position) {
-    holder.mTvName.setText(mListData.get(position).getName());
+    holder.mTvName.setText(mListData.get(position).getTitle());
+    GlideApp.with(holder.mIvIcon.getContext())
+        .load(mListData.get(position).getLogo())
+        .into(holder.mIvIcon);
+  }
+
+  public ServiceParent getEntity(int position) {
+    return mListData.get(position);
   }
 
   @Override public int getItemCount() {

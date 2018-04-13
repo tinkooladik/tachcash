@@ -3,6 +3,7 @@
 
   <!-- errors -->
   <string name="error_title">Ошибка</string>
+  <string name="server_not_connection">Сервер не отвечает. Проверьте подключение и повторите попытку</string>
 
   <!-- tabs -->
   <string name="tab_catalog">каталог</string>

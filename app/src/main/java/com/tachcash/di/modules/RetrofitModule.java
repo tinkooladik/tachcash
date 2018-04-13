@@ -7,7 +7,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tachcash.BuildConfig;
 import com.tachcash.di.scopes.AppScope;
-import com.tachcash.utils.Constants;
 import com.tachcash.utils.NetworkUtil;
 import com.tachcash.utils.TLSSocketFactory;
 import dagger.Module;
@@ -32,8 +31,16 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import timber.log.Timber;
 
+import static com.tachcash.utils.Constants.API_VERSION;
+import static com.tachcash.utils.Constants.AUTH_API_KEY_TEST;
+import static com.tachcash.utils.Constants.AUTH_APP_KEY_LIVE;
+import static com.tachcash.utils.Constants.BASE_URL;
+import static com.tachcash.utils.Constants.HEADER_ACCEPT_KEY;
+import static com.tachcash.utils.Constants.HEADER_ACCEPT_VALUE;
+import static com.tachcash.utils.Constants.HEADER_USER_AGENT;
+import static com.tachcash.utils.Constants.HEADER_X_API_VERSION;
+import static com.tachcash.utils.Constants.HEADER_X_AUTH_APP_KEY;
 import static com.tachcash.utils.Constants.LANG;
-import static com.tachcash.utils.Constants.USER_AGENT;
 
 /**
  * Created by Alexandra on 11/3/2017.
@@ -43,7 +50,7 @@ import static com.tachcash.utils.Constants.USER_AGENT;
 
   @Provides @AppScope Retrofit provideRetrofit(Converter.Factory converterFactory,
       OkHttpClient okClient) {
-    return new Retrofit.Builder().baseUrl(Constants.BASE_URL)
+    return new Retrofit.Builder().baseUrl(BASE_URL)
         .client(okClient)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
         .addConverterFactory(converterFactory)
@@ -90,15 +97,22 @@ import static com.tachcash.utils.Constants.USER_AGENT;
   }
 
   @Provides @AppScope Interceptor provideHeaderInterceptor() {
-    String userAgent =
-        String.format("%s; Android %s (tachcash %s)", Build.MANUFACTURER + " " + Build.MODEL,
-            Build.VERSION.RELEASE, BuildConfig.VERSION_NAME);
+    String userAgent = String.format("Tachcash/%s (%s; Android %s)", BuildConfig.VERSION_NAME,
+        android.os.Build.MODEL, Build.VERSION.RELEASE);
+    String authAppKey =
+        BASE_URL.contains("test") || BASE_URL.contains("android") || BASE_URL.contains("ios")
+            ? AUTH_API_KEY_TEST : AUTH_APP_KEY_LIVE;
     return chain -> {
       Request original = chain.request();
       Request request = original.newBuilder()
           .header(LANG, Locale.getDefault().getLanguage())
-          .header(USER_AGENT, userAgent)
+          .header(HEADER_ACCEPT_KEY, HEADER_ACCEPT_VALUE)
+          .header(HEADER_USER_AGENT, userAgent)
+          .header(HEADER_X_API_VERSION, API_VERSION)
+          .header(HEADER_X_AUTH_APP_KEY, authAppKey)
+          .method(original.method(), original.body())
           .build();
+
       return chain.proceed(request);
     };
   }

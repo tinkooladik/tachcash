@@ -12,6 +12,7 @@ import butterknife.OnClick;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.tachcash.R;
 import com.tachcash.base.BaseFragment;
+import com.tachcash.data.remote.models.ServiceParent;
 import com.tachcash.data.remote.models.ServiceParentEntity;
 import com.tachcash.feature.adapters.ServiceChildAdapter;
 import com.tachcash.feature.presenters.CatalogChildPresenter;
@@ -34,15 +35,15 @@ public class CatalogChildFragment extends BaseFragment implements CatalogChildVi
   @BindView(R.id.tvServiceName) TextView mTvTitle;
 
   private ServiceChildAdapter mAdapter;
-  private ServiceParentEntity mServiceParentEntity;
+  private ServiceParent mServiceParent;
 
   public CatalogChildFragment() {
     super(R.layout.fragment_catalog_child);
   }
 
-  public static CatalogChildFragment newInstance(ServiceParentEntity serviceParentEntity) {
+  public static CatalogChildFragment newInstance(ServiceParent serviceParent) {
     Bundle args = new Bundle();
-    args.putParcelable(SERVICE_PARENT, serviceParentEntity);
+    args.putParcelable(SERVICE_PARENT, serviceParent);
     CatalogChildFragment fragment = new CatalogChildFragment();
     fragment.setArguments(args);
     return fragment;
@@ -51,8 +52,8 @@ public class CatalogChildFragment extends BaseFragment implements CatalogChildVi
   @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    mServiceParentEntity = Objects.requireNonNull(getArguments()).getParcelable(SERVICE_PARENT);
-    mTvTitle.setText(Objects.requireNonNull(mServiceParentEntity).getName());
+    mServiceParent = Objects.requireNonNull(getArguments()).getParcelable(SERVICE_PARENT);
+    mTvTitle.setText(Objects.requireNonNull(mServiceParent).getTitle());
 
     mAdapter = new ServiceChildAdapter(mRvCatalog);
     mRvCatalog.setLayoutManager(new LinearLayoutManager(getContext()));
