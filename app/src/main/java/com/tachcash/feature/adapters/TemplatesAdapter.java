@@ -112,14 +112,20 @@ public class TemplatesAdapter extends RecyclerView.Adapter<TemplatesAdapter.View
       ButterKnife.bind(this, view);
     }
 
-    @OnClick(R.id.btnDelete) public void onClickDelete() {
+    @OnClick({ R.id.btnDelete, R.id.ivDelete }) public void onClickDelete() {
       mDataManager.deleteTemplate(mListData.get(getAdapterPosition()));
       mRxBus.post(new RxBusHelper.UpdateBadgeCount());
+      mListData.remove(getAdapterPosition());
       notifyItemRemoved(getAdapterPosition());
     }
 
     @OnClick(R.id.btnSave) public void onCLickSave() {
       mDataManager.updateTemplate(mListData.get(getAdapterPosition()), createTemplate());
+      mListData.get(getAdapterPosition())
+          .setAccount(Long.parseLong(mEtAccount.getText().toString()));
+      mListData.get(getAdapterPosition())
+          .setAmount(Integer.parseInt(mEtAmount.getText().toString()));
+      notifyItemChanged(getAdapterPosition());
       Toast.makeText(mRecyclerView.getContext(), "Шаблон сохранен!", Toast.LENGTH_LONG).show();
     }
 

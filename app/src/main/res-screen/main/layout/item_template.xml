@@ -108,10 +108,11 @@
           />
       <android.support.v7.widget.AppCompatImageView
           android:id="@+id/ivDelete"
-          android:layout_width="30dp"
-          android:layout_height="25dp"
+          android:layout_width="60dp"
+          android:layout_height="50dp"
           android:layout_gravity="center_vertical"
-          android:layout_marginEnd="16dp"
+          android:padding="12dp"
+          android:foreground="?attr/selectableItemBackgroundBorderless"
           app:layout_constraintBottom_toBottomOf="@id/tvAmount"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toTopOf="@+id/tvAmount"
