@@ -66,11 +66,11 @@ public class PaymentFragment extends BaseFragment implements PaymentView {
     mTemplate = Objects.requireNonNull(getArguments()).getParcelable(TEMPLATE_ENTITY);
 
     StringBuilder stringBuilder = new StringBuilder("99");
-    stringBuilder.append(String.format("%05d", mTemplate.getService()))
+    stringBuilder.append(String.format("%04d", mTemplate.getService()))
         .append(String.format("%012d", mTemplate.getAccount()))
         .append(String.format("%06d", mTemplate.getAmount()));
 
-    Timber.e(String.format("%05d", mTemplate.getService()));
+    Timber.e(String.format("%04d", mTemplate.getService()));
     Timber.e(String.format("%012d", mTemplate.getAccount()));
     Timber.e(String.format("%06d", mTemplate.getAmount()));
     Timber.e(stringBuilder.toString());

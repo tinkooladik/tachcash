@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.tachcash.R;
 import com.tachcash.base.BaseFragment;
@@ -62,10 +63,15 @@ public class CatalogChildFragment extends BaseFragment implements CatalogChildVi
     mAdapter = new ServiceChildAdapter(mRvCatalog, mNavigator, (MainActivity) getActivity());
     mRvCatalog.setLayoutManager(new LinearLayoutManager(getContext()));
     mRvCatalog.setAdapter(mAdapter);
+    mRvCatalog.setNestedScrollingEnabled(false);
 
     ItemClickSupport.addTo(mRvCatalog).setOnItemClickListener((recyclerView, position, v) -> {
       mAdapter.setSelected(position);
     });
+  }
+
+  @OnTextChanged(R.id.etSearch) void onSearchTextChanged(CharSequence s) {
+    mCatalogChildPresenter.filterServicesChildren(s.toString());
   }
 
   @OnClick(R.id.ivBack) public void onViewClicked() {

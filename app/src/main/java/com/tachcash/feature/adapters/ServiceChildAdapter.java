@@ -80,9 +80,7 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
         .load(mListData.get(position).getLogo())
         .into(holder.mIvIcon);
 
-    if (position == 0) {
-      holder.mClParent.setPadding(mPadding, mPadding, mPadding, mVerticalPadding);
-    } else if (position == mLastPos) {
+    if (position == mLastPos) {
       holder.mClParent.setPadding(mPadding, mVerticalPadding, mPadding, mPadding);
     } else {
       holder.mClParent.setPadding(mPadding, mVerticalPadding, mPadding, mVerticalPadding);
