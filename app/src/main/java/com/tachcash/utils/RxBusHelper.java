@@ -10,4 +10,8 @@ public class RxBusHelper {
 
   }
 
+  public static class UpdateBadgeCount {
+
+  }
+
 }

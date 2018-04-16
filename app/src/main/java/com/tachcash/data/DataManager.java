@@ -87,4 +87,8 @@ public class DataManager {
   public List<TemplateEntity> getTemplates() {
     return mPref.getTemplates();
   }
+
+  public int getTemplatesCount() {
+    return mPref.getTemplatesCount();
+  }
 }

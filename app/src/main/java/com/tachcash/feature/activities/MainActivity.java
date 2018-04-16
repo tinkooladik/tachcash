@@ -11,6 +11,7 @@ import com.tachcash.feature.fragments.MapFragment;
 import com.tachcash.feature.fragments.TemplatesFragment;
 import com.tachcash.feature.presenters.MainPresenter;
 import com.tachcash.feature.views.MainView;
+import com.tachcash.utils.views.BadgeHelper;
 
 import static com.tachcash.utils.Constants.FRAGMENT_CATALOG;
 import static com.tachcash.utils.Constants.FRAGMENT_MAP;
@@ -51,9 +52,15 @@ public class MainActivity extends BaseActivity implements MainView {
       }
       return true;
     });
+
+    BadgeHelper.addBadge(mBottomNavigationView, 1);
   }
 
   public void selectPaymentTab() {
     mBottomNavigationView.setSelectedItemId(R.id.tab_payment);
+  }
+
+  @Override public void updateBadge(int count) {
+    BadgeHelper.updateBadge(mBottomNavigationView, 1, count);
   }
 }

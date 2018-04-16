@@ -20,8 +20,8 @@
       />
   <android.support.v7.widget.AppCompatImageView
       android:id="@+id/ivIcon"
-      android:layout_width="70dp"
-      android:layout_height="70dp"
+      android:layout_width="50dp"
+      android:layout_height="50dp"
       android:tint="@color/colorWhite"
       android:background="@null"
       app:layout_constraintBottom_toBottomOf="@+id/ivBg"

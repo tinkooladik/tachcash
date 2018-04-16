@@ -19,10 +19,12 @@ import com.tachcash.utils.RxBusHelper;
 
   public void saveTemplate(TemplateEntity templateEntity) {
     mDataManager.saveTemplate(templateEntity);
+    mRxBus.post(new RxBusHelper.UpdateBadgeCount());
   }
 
   public void deleteTemplate(TemplateEntity templateEntity) {
     mDataManager.deleteTemplate(templateEntity);
     mRxBus.post(new RxBusHelper.UpdateTemplates());
+    mRxBus.post(new RxBusHelper.UpdateBadgeCount());
   }
 }

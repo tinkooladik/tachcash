@@ -6,7 +6,6 @@ import com.google.gson.Gson;
 import com.tachcash.data.local.model.TemplateEntity;
 import java.util.ArrayList;
 import java.util.Arrays;
-import timber.log.Timber;
 
 /**
  * Created by Alexandra on 11/3/2017.
@@ -18,6 +17,7 @@ public class PreferencesHelper {
   private static final String PREF_SECRET = "PREF_SECRET";
   private static final String PREF_TOKEN = "PREF_TOKEN";
   private static final String TEMPLATES = "TEMPLATES";
+  private static final String TEMPLATES_COUNT = "TEMPLATES_COUNT";
 
   private final SharedPreferences mPreferences;
 
@@ -42,14 +42,16 @@ public class PreferencesHelper {
   }
 
   public void saveTemplate(TemplateEntity templateEntity) {
+    increaseTemplatesCount();
     ArrayList<TemplateEntity> templateEntities = getTemplates();
     templateEntities.add(templateEntity);
     mPreferences.edit().putString(TEMPLATES, (new Gson()).toJson(templateEntities)).apply();
   }
 
   public void deleteTemplate(TemplateEntity templateEntity) {
+    decreaseTemplatesCount();
     ArrayList<TemplateEntity> templateEntities = getTemplates();
-    Timber.e("removed? " + templateEntities.remove(templateEntity));
+    templateEntities.remove(templateEntity);
     mPreferences.edit().putString(TEMPLATES, (new Gson()).toJson(templateEntities)).apply();
   }
 
@@ -61,6 +63,21 @@ public class PreferencesHelper {
       templateEntities.addAll(Arrays.asList(fromPref));
     }
     return templateEntities;
+  }
+
+  public void increaseTemplatesCount() {
+    mPreferences.edit()
+        .putInt(TEMPLATES_COUNT, mPreferences.getInt(TEMPLATES_COUNT, 0) + 1)
+        .apply();
+  }
+
+  public void decreaseTemplatesCount() {
+    int currentCount = mPreferences.getInt(TEMPLATES_COUNT, 0);
+    mPreferences.edit().putInt(TEMPLATES_COUNT, currentCount == 0 ? 0 : currentCount - 1).apply();
+  }
+
+  public int getTemplatesCount() {
+    return mPreferences.getInt(TEMPLATES_COUNT, 0);
   }
 
   public void clear() {

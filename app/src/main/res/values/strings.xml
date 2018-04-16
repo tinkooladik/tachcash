@@ -23,7 +23,7 @@
   <string name="payment_hrn">%s грн</string>
   <string name="payment_delete">Удалить</string>
   <string name="payment_amount">Сумма:</string>
-  <string name="payment_create">Создать шаблон</string>
+  <string name="payment_create">Добавить в корзину</string>
   <string name="payment_templates">Шаблоны</string>
   <string name="payment_account_title">Номер договора</string>
   <string name="payment_account_hint">Введите номер договора</string>

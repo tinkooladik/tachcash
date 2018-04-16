@@ -22,6 +22,8 @@ import com.tachcash.data.local.model.TemplateEntity;
 import com.tachcash.data.remote.models.ServiceChildren;
 import com.tachcash.feature.fragments.PaymentFragment;
 import com.tachcash.utils.GlideApp;
+import com.tachcash.utils.RxBus;
+import com.tachcash.utils.RxBusHelper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -39,6 +41,7 @@ import static com.tachcash.utils.ViewUtil.dpToPx;
 public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapter.ViewHolder> {
 
   @Inject DataManager mDataManager;
+  @Inject RxBus mRxBus;
 
   private ArrayList<ServiceChildren> mListData = new ArrayList<>();
   private RecyclerView mRecyclerView;
@@ -115,6 +118,7 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
 
     @OnClick(R.id.btnCreateTemplate) public void onClickTemplate() {
       mDataManager.saveTemplate(createTemplate());
+      mRxBus.post(new RxBusHelper.UpdateBadgeCount());
       Toast.makeText(mRecyclerView.getContext(), "Шаблон сохранен!", Toast.LENGTH_LONG).show();
     }
 
