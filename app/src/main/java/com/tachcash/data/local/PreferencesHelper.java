@@ -48,6 +48,12 @@ public class PreferencesHelper {
     mPreferences.edit().putString(TEMPLATES, (new Gson()).toJson(templateEntities)).apply();
   }
 
+  public void updateTemplate(TemplateEntity oldTemplate, TemplateEntity newTemplate) {
+    ArrayList<TemplateEntity> templateEntities = getTemplates();
+    templateEntities.set(templateEntities.indexOf(oldTemplate), oldTemplate);
+    mPreferences.edit().putString(TEMPLATES, (new Gson()).toJson(templateEntities)).apply();
+  }
+
   public void deleteTemplate(TemplateEntity templateEntity) {
     decreaseTemplatesCount();
     ArrayList<TemplateEntity> templateEntities = getTemplates();

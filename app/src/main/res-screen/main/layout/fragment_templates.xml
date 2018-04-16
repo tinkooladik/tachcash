@@ -5,32 +5,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorLLightGray"
+    android:background="@color/colorLightGray"
     android:clickable="true"
     android:focusable="true"
     >
-  <TextView
-      android:id="@+id/tvTitle"
-      android:layout_width="wrap_content"
+  <LinearLayout
+      android:id="@+id/llTitle"
+      android:orientation="vertical"
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginTop="16dp"
-      android:fontFamily="@font/century_gothic"
-      android:text="@string/templates_title"
-      android:textColor="@color/colorAlmostBlack"
-      android:textSize="20sp"
+      android:gravity="center_horizontal"
+      android:background="@drawable/shape_gradient_accent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      />
+      >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/circe_regular"
+        android:text="@string/templates_title"
+        android:textColor="@color/colorAlmostWhite"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/circe_bold"
+        android:textColor="@color/colorAlmostWhite"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+  </LinearLayout>
   <android.support.v7.widget.RecyclerView
       android:id="@+id/rvTemplates"
       android:layout_width="0dp"
       android:layout_height="0dp"
-      android:layout_marginTop="16dp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+      app:layout_constraintTop_toBottomOf="@+id/llTitle"
       tools:listitem="@layout/item_service_parent"
       />
 </android.support.constraint.ConstraintLayout>

@@ -80,6 +80,10 @@ public class DataManager {
     mPref.saveTemplate(templateEntity);
   }
 
+  public void updateTemplate(TemplateEntity oldTemplate, TemplateEntity newTemplate) {
+    mPref.updateTemplate(oldTemplate, newTemplate);
+  }
+
   public void deleteTemplate(TemplateEntity templateEntity) {
     mPref.deleteTemplate(templateEntity);
   }

@@ -32,6 +32,7 @@ public class MainActivity extends BaseActivity implements MainView {
         FRAGMENT_CATALOG);
 
     removeShiftMode(mBottomNavigationView);
+    mBottomNavigationView.getMenu().removeItem(R.id.tab_history);
     mBottomNavigationView.setOnNavigationItemSelectedListener(item -> {
       switch (item.getItemId()) {
         case R.id.tab_catalog:

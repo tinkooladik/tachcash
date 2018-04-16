@@ -22,7 +22,6 @@
   <string name="payment_date">Сформирован %s</string>
   <string name="payment_to_pay">К оплате</string>
   <string name="payment_hrn">%s грн</string>
-  <string name="payment_delete">Удалить</string>
   <string name="payment_amount">Сумма:</string>
   <string name="payment_create">Добавить в корзину</string>
   <string name="payment_templates">Шаблоны</string>
@@ -31,7 +30,13 @@
   <string name="payment_amount_title">Сумма, грн</string>
   <string name="payment_amount_hint">Введите сумму</string>
   <string name="payment_go_to_payment">Перейти к оплате</string>
+  <string name="payment_pay_all">Перейти к оплате</string>
 
   <!-- templates -->
-  <string name="templates_title">Шаблоны</string>
+  <string name="templates_title">Корзина</string>
+  <string name="templates_title_descr">сейчас в корзине %d услуги</string>
+  <string name="templates_amount">Сумма: %d грн</string>
+  <string name="templates_account">| %d</string>
+  <string name="templates_delete">Удалить</string>
+  <string name="templates_save">Сохранить</string>
 </resources>
