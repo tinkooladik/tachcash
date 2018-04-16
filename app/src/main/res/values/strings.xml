@@ -30,7 +30,6 @@
   <string name="payment_amount_title">Сумма, грн</string>
   <string name="payment_amount_hint">Введите сумму</string>
   <string name="payment_go_to_payment">Перейти к оплате</string>
-  <string name="payment_pay_all">Перейти к оплате</string>
 
   <!-- templates -->
   <string name="templates_title">Корзина</string>
@@ -39,4 +38,5 @@
   <string name="templates_account">| %d</string>
   <string name="templates_delete">Удалить</string>
   <string name="templates_save">Сохранить</string>
+  <string name="templates_pay_all">Оплатить все платежи</string>
 </resources>

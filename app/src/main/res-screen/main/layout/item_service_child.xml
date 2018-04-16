@@ -170,7 +170,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:background="@drawable/shape_green_gradient_rounded"
+            android:background="@drawable/shape_green_gradient_rounded_right_bot"
             android:fontFamily="@font/circe_bold"
             android:text="@string/payment_go_to_payment"
             android:textAllCaps="false"

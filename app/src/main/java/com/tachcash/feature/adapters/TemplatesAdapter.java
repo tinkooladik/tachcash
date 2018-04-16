@@ -59,6 +59,7 @@ public class TemplatesAdapter extends RecyclerView.Adapter<TemplatesAdapter.View
   public void addList(List<TemplateEntity> listData) {
     mListData.clear();
     mListData.addAll(listData);
+    mLastPos = mListData.size() - 1;
     notifyDataSetChanged();
   }
 
@@ -78,6 +79,14 @@ public class TemplatesAdapter extends RecyclerView.Adapter<TemplatesAdapter.View
         mActivity.getString(R.string.templates_account, template.getAccount()));
     holder.mEtAmount.setText(String.valueOf(template.getAmount()));
     holder.mEtAccount.setText(String.valueOf(template.getAccount()));
+
+    if (position == 0) {
+      holder.mClParent.setPadding(mPadding, mPadding, mPadding, mVerticalPadding);
+    } else if (position == mLastPos) {
+      holder.mClParent.setPadding(mPadding, mVerticalPadding, mPadding, mPadding);
+    } else {
+      holder.mClParent.setPadding(mPadding, mVerticalPadding, mPadding, mVerticalPadding);
+    }
   }
 
   public void setSelected(int selectedPos) {
