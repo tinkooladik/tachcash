@@ -136,7 +136,7 @@ import static com.tachcash.utils.Constants.LANG;
       if (request.method().equals("GET")) {
         CacheControl cacheControl;
         if (requestUrl.contains("/api/v1/wallets") || requestUrl.contains("/api/v1/transaction/")) {
-          cacheControl = new CacheControl.Builder().maxAge(0, TimeUnit.SECONDS).build();
+          cacheControl = new CacheControl.Builder().maxAge(5, TimeUnit.MINUTES).build();
         } else {
           cacheControl = new CacheControl.Builder().noCache().build();
         }

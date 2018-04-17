@@ -36,6 +36,7 @@ public class TemplatesFragment extends BaseFragment implements TemplatesView {
 
   private TemplatesAdapter mAdapter;
   private ArrayList<TemplateEntity> mTemplates = new ArrayList<>();
+  private int mItemsCount;
 
   public TemplatesFragment() {
     super(R.layout.fragment_templates);
@@ -52,7 +53,11 @@ public class TemplatesFragment extends BaseFragment implements TemplatesView {
     super.onViewCreated(view, savedInstanceState);
 
     mRvTemplates.setLayoutManager(new LinearLayoutManager(getContext()));
-    mAdapter = new TemplatesAdapter(mRvTemplates, mNavigator, (MainActivity) getActivity());
+    mAdapter = new TemplatesAdapter(mRvTemplates, (MainActivity) getActivity(), () -> {
+      mItemsCount--;
+      mTvTitle.setText(getString(R.string.templates_title_descr,
+          getResources().getQuantityString(R.plurals.plurals_services, mItemsCount, mItemsCount)));
+    });
     mRvTemplates.setAdapter(mAdapter);
 
     ItemClickSupport.addTo(mRvTemplates).setOnItemClickListener((recyclerView, position, v) -> {
@@ -61,10 +66,12 @@ public class TemplatesFragment extends BaseFragment implements TemplatesView {
   }
 
   @Override public void setUpTemplates(List<TemplateEntity> templates) {
+    mItemsCount = templates.size();
     mTemplates.clear();
     mTemplates.addAll(templates);
     mAdapter.addList(mTemplates);
-    mTvTitle.setText(getString(R.string.templates_title_descr, templates.size()));
+    mTvTitle.setText(getString(R.string.templates_title_descr,
+        getResources().getQuantityString(R.plurals.plurals_services, mItemsCount, mItemsCount)));
   }
 
   @OnClick(R.id.btnPayAll) public void onClickPayAll() {

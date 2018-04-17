@@ -24,6 +24,7 @@ import com.tachcash.feature.fragments.PaymentFragment;
 import com.tachcash.utils.GlideApp;
 import com.tachcash.utils.RxBus;
 import com.tachcash.utils.RxBusHelper;
+import com.tapadoo.alerter.Alerter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -76,6 +77,9 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
   @Override
   public void onBindViewHolder(@NonNull ServiceChildAdapter.ViewHolder holder, int position) {
     holder.mTvName.setText(mListData.get(position).getName());
+    holder.mExpandableLayout.collapse();
+    holder.mEtAmount.setText("");
+    holder.mEtAccount.setText("");
     GlideApp.with(holder.mIvIcon.getContext())
         .load(mListData.get(position).getLogo())
         .into(holder.mIvIcon);
@@ -115,14 +119,31 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
     }
 
     @OnClick(R.id.btnCreateTemplate) public void onClickTemplate() {
-      mDataManager.saveTemplate(createTemplate());
-      mRxBus.post(new RxBusHelper.UpdateBadgeCount());
-      Toast.makeText(mRecyclerView.getContext(), "Шаблон сохранен!", Toast.LENGTH_LONG).show();
+      if (mEtAccount.length() > 0 && mEtAmount.length() > 0) {
+        mDataManager.saveTemplate(createTemplate());
+        mRxBus.post(new RxBusHelper.UpdateBadgeCount());
+        Toast.makeText(mRecyclerView.getContext(), "Шаблон сохранен!", Toast.LENGTH_LONG).show();
+      } else {
+        showErrorAlert();
+      }
     }
 
     @OnClick(R.id.btnGoToPayment) public void onCLickPayment() {
-      mNavigator.addFragmentTagBackStack(mActivity, R.id.container_main,
-          PaymentFragment.newInstance(createTemplate()), FRAGMENT_PAYMENT);
+      if (mEtAccount.length() > 0 && mEtAmount.length() > 0) {
+        mNavigator.addFragmentTagBackStack(mActivity, R.id.container_main,
+            PaymentFragment.newInstance(createTemplate()), FRAGMENT_PAYMENT);
+      } else {
+        showErrorAlert();
+      }
+    }
+
+    private void showErrorAlert() {
+      Alerter.create(mActivity)
+          .setTitle(R.string.error_title)
+          .setText(R.string.error_wrong_data)
+          .setBackgroundColorRes(R.color.colorRed)
+          .enableSwipeToDismiss()
+          .show();
     }
 
     private TemplateEntity createTemplate() {

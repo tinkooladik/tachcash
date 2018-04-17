@@ -94,11 +94,12 @@ public class PaymentFragment extends BaseFragment implements PaymentView {
       for (TemplateEntity template : mTemplates) {
         mAmount += template.getAmount();
         stringBuilder.append(String.format("%04d", template.getService()))
-            .append(String.format("%06d", template.getAmount()));
+            .append(String.format("%04d", template.getAmount()));
       }
       mClTicket.getLayoutParams().height = dpToPx(250);
     }
 
+    Timber.e(stringBuilder.toString());
     MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
     try {
       BitMatrix bitMatrix =

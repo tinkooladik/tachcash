@@ -16,12 +16,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.tachcash.App;
 import com.tachcash.R;
-import com.tachcash.base.Navigator;
 import com.tachcash.data.DataManager;
 import com.tachcash.data.local.model.TemplateEntity;
 import com.tachcash.utils.GlideApp;
 import com.tachcash.utils.RxBus;
 import com.tachcash.utils.RxBusHelper;
+import com.tapadoo.alerter.Alerter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -45,15 +45,19 @@ public class TemplatesAdapter extends RecyclerView.Adapter<TemplatesAdapter.View
   private int mLastPos;
   private int mPadding = dpToPx(16);
   private int mVerticalPadding = dpToPx(4);
-  private Navigator mNavigator;
   private AppCompatActivity mActivity;
+  private OnItemRemovedListener mOnItemRemovedListener;
 
-  public TemplatesAdapter(RecyclerView recyclerView, Navigator navigator,
-      AppCompatActivity activity) {
+  public interface OnItemRemovedListener {
+    void onItemRemoved();
+  }
+
+  public TemplatesAdapter(RecyclerView recyclerView, AppCompatActivity activity,
+      OnItemRemovedListener listener) {
     App.getAppComponent().inject(this);
     mRecyclerView = recyclerView;
-    mNavigator = navigator;
     mActivity = activity;
+    mOnItemRemovedListener = listener;
   }
 
   public void addList(List<TemplateEntity> listData) {
@@ -126,16 +130,30 @@ public class TemplatesAdapter extends RecyclerView.Adapter<TemplatesAdapter.View
       mRxBus.post(new RxBusHelper.UpdateBadgeCount());
       mListData.remove(getAdapterPosition());
       notifyItemRemoved(getAdapterPosition());
+      mOnItemRemovedListener.onItemRemoved();
     }
 
     @OnClick(R.id.btnSave) public void onCLickSave() {
-      mDataManager.updateTemplate(mListData.get(getAdapterPosition()), createTemplate());
-      mListData.get(getAdapterPosition())
-          .setAccount(Long.parseLong(mEtAccount.getText().toString()));
-      mListData.get(getAdapterPosition())
-          .setAmount(Integer.parseInt(mEtAmount.getText().toString()));
-      notifyItemChanged(getAdapterPosition());
-      Toast.makeText(mRecyclerView.getContext(), "Шаблон сохранен!", Toast.LENGTH_LONG).show();
+      if (mEtAccount.length() > 0 && mEtAmount.length() > 0) {
+        mDataManager.updateTemplate(mListData.get(getAdapterPosition()), createTemplate());
+        mListData.get(getAdapterPosition())
+            .setAccount(Long.parseLong(mEtAccount.getText().toString()));
+        mListData.get(getAdapterPosition())
+            .setAmount(Integer.parseInt(mEtAmount.getText().toString()));
+        notifyItemChanged(getAdapterPosition());
+        Toast.makeText(mRecyclerView.getContext(), "Шаблон сохранен!", Toast.LENGTH_LONG).show();
+      } else {
+        showErrorAlert();
+      }
+    }
+
+    private void showErrorAlert() {
+      Alerter.create(mActivity)
+          .setTitle(R.string.error_title)
+          .setText(R.string.error_wrong_data)
+          .setBackgroundColorRes(R.color.colorRed)
+          .enableSwipeToDismiss()
+          .show();
     }
 
     private TemplateEntity createTemplate() {
