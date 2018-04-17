@@ -104,4 +104,10 @@ dependencies {
 
   //ticket view
   implementation 'com.vipulasri:ticketview:1.0.5'
+
+  //map
+  implementation 'com.google.android.gms:play-services-maps:15.0.0'
+
+  //ted permission
+  implementation 'gun0912.ted:tedpermission-rx2:2.1.1'
 }

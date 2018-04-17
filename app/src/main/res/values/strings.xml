@@ -39,4 +39,13 @@
   <string name="templates_delete">Удалить</string>
   <string name="templates_save">Сохранить</string>
   <string name="templates_pay_all">Оплатить все платежи</string>
+
+  <!-- map -->
+  <string name="permission_title">Важно!</string>
+  <string name="permission_descr">Для отображения карты необходимо получить разрешение пользователя</string>
+  <string name="permission_denied_title">Отклонено</string>
+  <string name="permission_denied_descr">Если вы отклонили разрешени, вы не сможете использовать эту функцию.\n\nПожалуйста, включите разрешение в настройках устройства</string>
+  <string name="permission_settings">Настройки</string>
+  <string name="permission_close">Закрыть</string>
+  <string name="permission_confirm">Продолжить</string>
 </resources>
