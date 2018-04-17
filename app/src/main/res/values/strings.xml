@@ -21,7 +21,7 @@
   <string name="payment_code">tachcashcode: </string>
   <string name="payment_date">Сформирован %s</string>
   <string name="payment_to_pay">К оплате</string>
-  <string name="payment_hrn">%s грн</string>
+  <string name="payment_hrn">%d грн</string>
   <string name="payment_amount">Сумма:</string>
   <string name="payment_create">Добавить в корзину</string>
   <string name="payment_templates">Шаблоны</string>
@@ -30,6 +30,7 @@
   <string name="payment_amount_title">Сумма, грн</string>
   <string name="payment_amount_hint">Введите сумму</string>
   <string name="payment_go_to_payment">Перейти к оплате</string>
+  <string name="payment_title">Оплата</string>
 
   <!-- templates -->
   <string name="templates_title">Корзина</string>

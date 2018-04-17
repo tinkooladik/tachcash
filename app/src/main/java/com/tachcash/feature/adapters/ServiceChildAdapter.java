@@ -121,7 +121,7 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
     }
 
     @OnClick(R.id.btnGoToPayment) public void onCLickPayment() {
-      mNavigator.replaceFragmentTagNotCopy(mActivity, R.id.container_main,
+      mNavigator.addFragmentTagBackStack(mActivity, R.id.container_main,
           PaymentFragment.newInstance(createTemplate()), FRAGMENT_PAYMENT);
     }
 

@@ -16,6 +16,7 @@ public class Constants {
   /** argument keys */
   public static final String SERVICE_PARENT = "SERVICE_PARENT";
   public static final String TEMPLATE_ENTITY = "TEMPLATE_ENTITY";
+  public static final String TEMPLATE_ENTITY_LIST = "TEMPLATE_ENTITY_LIST";
 
   /** fragments */
   public static final String FRAGMENT_CATALOG = "FRAGMENT_CATALOG";

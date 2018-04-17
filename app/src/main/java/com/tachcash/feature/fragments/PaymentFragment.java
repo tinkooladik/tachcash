@@ -5,6 +5,9 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,15 +22,16 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.tachcash.R;
 import com.tachcash.base.BaseFragment;
 import com.tachcash.data.local.model.TemplateEntity;
-import com.tachcash.feature.activities.MainActivity;
+import com.tachcash.feature.adapters.PaymentsAdapter;
 import com.tachcash.feature.presenters.PaymentPresenter;
 import com.tachcash.feature.views.PaymentView;
-import com.tachcash.utils.GlideApp;
+import java.util.ArrayList;
 import java.util.Objects;
 import timber.log.Timber;
 
-import static com.tachcash.utils.Constants.FRAGMENT_TEMPLATES;
 import static com.tachcash.utils.Constants.TEMPLATE_ENTITY;
+import static com.tachcash.utils.Constants.TEMPLATE_ENTITY_LIST;
+import static com.tachcash.utils.ViewUtil.dpToPx;
 
 /**
  * Created by Alexandra on 11.04.2018.
@@ -39,13 +43,13 @@ public class PaymentFragment extends BaseFragment implements PaymentView {
   @BindView(R.id.ivBarCode) ImageView mIvBarCode;
   @BindView(R.id.tvCodeNum) TextView mTvCodeNum;
   @BindView(R.id.tvDate) TextView mTvDate;
-  @BindView(R.id.ivServiceIcon) ImageView mIvServiceIcon;
-  @BindView(R.id.tvServiceName) TextView mTvServiceName;
-  @BindView(R.id.tvAccount) TextView mTvAccount;
-  @BindView(R.id.tvSum) TextView mTvSum;
   @BindView(R.id.tvAmount) TextView mTvAmount;
+  @BindView(R.id.rvPayments) RecyclerView mRvPayments;
+  @BindView(R.id.clTicket) ConstraintLayout mClTicket;
 
-  private TemplateEntity mTemplate;
+  private ArrayList<TemplateEntity> mTemplates;
+  private int mAmount;
+  private PaymentsAdapter mAdapter;
 
   public PaymentFragment() {
     super(R.layout.fragment_payment);
@@ -59,21 +63,41 @@ public class PaymentFragment extends BaseFragment implements PaymentView {
     return fragment;
   }
 
+  public static PaymentFragment newInstance(ArrayList<TemplateEntity> templateEntity) {
+    Bundle args = new Bundle();
+    args.putParcelableArrayList(TEMPLATE_ENTITY_LIST, templateEntity);
+    PaymentFragment fragment = new PaymentFragment();
+    fragment.setArguments(args);
+    return fragment;
+  }
+
   @SuppressLint("DefaultLocale") @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
 
-    mTemplate = Objects.requireNonNull(getArguments()).getParcelable(TEMPLATE_ENTITY);
+    StringBuilder stringBuilder = new StringBuilder();
 
-    StringBuilder stringBuilder = new StringBuilder("99");
-    stringBuilder.append(String.format("%04d", mTemplate.getService()))
-        .append(String.format("%012d", mTemplate.getAccount()))
-        .append(String.format("%06d", mTemplate.getAmount()));
-
-    Timber.e(String.format("%04d", mTemplate.getService()));
-    Timber.e(String.format("%012d", mTemplate.getAccount()));
-    Timber.e(String.format("%06d", mTemplate.getAmount()));
-    Timber.e(stringBuilder.toString());
+    TemplateEntity templateEntity =
+        Objects.requireNonNull(getArguments()).getParcelable(TEMPLATE_ENTITY);
+    if (templateEntity != null) {
+      mTemplates = new ArrayList<>();
+      mTemplates.add(templateEntity);
+      stringBuilder.append("99")
+          .append(String.format("%04d", templateEntity.getService()))
+          .append(String.format("%012d", templateEntity.getAccount()))
+          .append(String.format("%06d", templateEntity.getAmount()));
+      mAmount += templateEntity.getAmount();
+    } else {
+      mTemplates =
+          Objects.requireNonNull(getArguments()).getParcelableArrayList(TEMPLATE_ENTITY_LIST);
+      stringBuilder.append("7");
+      for (TemplateEntity template : mTemplates) {
+        mAmount += template.getAmount();
+        stringBuilder.append(String.format("%04d", template.getService()))
+            .append(String.format("%06d", template.getAmount()));
+      }
+      mClTicket.getLayoutParams().height = dpToPx(250);
+    }
 
     MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
     try {
@@ -86,29 +110,26 @@ public class PaymentFragment extends BaseFragment implements PaymentView {
       Timber.e(e);
     }
 
-    mTvCodeNum.setText(mTemplate.getTachcashCode());
-    mTvDate.setText(getString(R.string.payment_date, mTemplate.getDate()));
-    GlideApp.with(this).load(mTemplate.getIcon()).into(mIvServiceIcon);
-    mTvAmount.setText(getString(R.string.payment_hrn, mTemplate.getAmount()));
-    mTvSum.setText(getString(R.string.payment_hrn, mTemplate.getAmount()));
-    mTvServiceName.setText(mTemplate.getServiceName());
-    mTvAccount.setText(String.valueOf(mTemplate.getAccount()));
+    mTvCodeNum.setText(mTemplates.get(0).getTachcashCode());
+    mTvDate.setText(getString(R.string.payment_date, mTemplates.get(0).getDate()));
+    mTvAmount.setText(getString(R.string.payment_hrn, mAmount));
+
+    mRvPayments.setLayoutManager(new LinearLayoutManager(getContext()));
+    mAdapter = new PaymentsAdapter();
+    mRvPayments.setAdapter(mAdapter);
+    mAdapter.addList(mTemplates);
   }
 
-  @OnClick(R.id.llCreate) public void onMLlCreateClicked() {
-    mPaymentPresenter.saveTemplate(mTemplate);
-    showToastMessage("Шаблон сохранен!");
-  }
-
-  @OnClick(R.id.llTemplates) public void onMLlTemplatesClicked() {
-    ((MainActivity) Objects.requireNonNull(getActivity())).selectPaymentTab();
-    mNavigator.replaceFragmentTag((MainActivity) Objects.requireNonNull(getActivity()),
-        R.id.container_main, TemplatesFragment.newInstance(), FRAGMENT_TEMPLATES);
-  }
-
-  @OnClick(R.id.llDelete) public void onMLlDeleteClicked() {
-    mPaymentPresenter.deleteTemplate(mTemplate);
-    showToastMessage("Шаблон удален!");
+  @OnClick(R.id.ivBack) public void onMLlTemplatesClicked() {
+    //((MainActivity) Objects.requireNonNull(getActivity())).selectPaymentTab();
+    //mNavigator.replaceFragmentTag((MainActivity) Objects.requireNonNull(getActivity()),
+    //    R.id.container_main, TemplatesFragment.newInstance(), FRAGMENT_TEMPLATES);
     Objects.requireNonNull(getActivity()).onBackPressed();
   }
+
+  //@OnClick(R.id.llDelete) public void onMLlDeleteClicked() {
+  //  mPaymentPresenter.deleteTemplate(mTemplate);
+  //  showToastMessage("Шаблон удален!");
+  //  Objects.requireNonNull(getActivity()).onBackPressed();
+  //}
 }

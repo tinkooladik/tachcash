@@ -63,7 +63,6 @@ public class CatalogChildFragment extends BaseFragment implements CatalogChildVi
     mAdapter = new ServiceChildAdapter(mRvCatalog, mNavigator, (MainActivity) getActivity());
     mRvCatalog.setLayoutManager(new LinearLayoutManager(getContext()));
     mRvCatalog.setAdapter(mAdapter);
-    mRvCatalog.setNestedScrollingEnabled(false);
 
     ItemClickSupport.addTo(mRvCatalog).setOnItemClickListener((recyclerView, position, v) -> {
       mAdapter.setSelected(position);
