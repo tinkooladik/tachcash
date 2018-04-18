@@ -9,8 +9,10 @@ import com.tachcash.feature.views.CatalogChildView;
 import com.tachcash.utils.ErrorsUtils;
 import com.tachcash.utils.ThreadSchedulers;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import timber.log.Timber;
 
@@ -32,21 +34,37 @@ import timber.log.Timber;
 
   public void getAllServicesChild(int parenId) {
     getViewState().setProgressVisible(true);
-    Disposable disposable = mDataManager.getServicesChildren(parenId)
-        .compose(ThreadSchedulers.singleSchedulers())
-        .subscribe(servicesChildren -> {
-          getViewState().setProgressVisible(false);
-          getViewState().setUpServices(servicesChildren);
-          mListServicesChildren = servicesChildren;
-        }, throwable -> {
-          getViewState().setProgressVisible(false);
-          Timber.e(throwable);
-          if (!ErrorsUtils.isNetworkError(throwable)) {
-            getViewState().showDialogError(ErrorsUtils.getError(throwable));
-          } else {
-            getViewState().showDialogError(mContext.getString(R.string.server_not_connection));
+    Integer[] need = { 126, 164, 165, 175, 176, 1200, 1202, 1203, 1204, 1207, 1209 };
+    List<Integer> mySet = Arrays.asList(need);
+    Disposable disposable = mDataManager.getServicesChildren(parenId).flatMap(list -> {
+      if (parenId == 2) {
+        ArrayList<ServiceChildren> newList = new ArrayList<>();
+        for (ServiceChildren service : list) {
+          if (mySet.contains(service.getId())) {
+            if (service.getId() == 126) {
+              service.setName("Vodafone");
+            } else if (service.getId() == 1200) {
+              service.setName("ТриМоб");
+            }
+            newList.add(service);
           }
-        });
+        }
+        return Single.just(newList);
+      }
+      return Single.just(list);
+    }).compose(ThreadSchedulers.singleSchedulers()).subscribe(servicesChildren -> {
+      getViewState().setProgressVisible(false);
+      getViewState().setUpServices(servicesChildren);
+      mListServicesChildren = servicesChildren;
+    }, throwable -> {
+      getViewState().setProgressVisible(false);
+      Timber.e(throwable);
+      if (!ErrorsUtils.isNetworkError(throwable)) {
+        getViewState().showDialogError(ErrorsUtils.getError(throwable));
+      } else {
+        getViewState().showDialogError(mContext.getString(R.string.server_not_connection));
+      }
+    });
     addToUndisposable(disposable);
   }
 

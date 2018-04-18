@@ -85,40 +85,60 @@ public class PaymentFragment extends BaseFragment implements PaymentView {
       stringBuilder.append("99")
           .append(String.format("%04d", templateEntity.getService()))
           .append(String.format("%012d", templateEntity.getAccount()))
-          .append(String.format("%06d", templateEntity.getAmount()));
+          .append(String.format("%04d", templateEntity.getAmount()));
       mAmount += templateEntity.getAmount();
+      generateQr(stringBuilder.toString());
     } else {
       mTemplates =
           Objects.requireNonNull(getArguments()).getParcelableArrayList(TEMPLATE_ENTITY_LIST);
-      stringBuilder.append("7");
-      for (TemplateEntity template : mTemplates) {
-        mAmount += template.getAmount();
-        stringBuilder.append(String.format("%04d", template.getService()))
-            .append(String.format("%04d", template.getAmount()));
-      }
+      calculateTemplates();
       mClTicket.getLayoutParams().height = dpToPx(250);
     }
 
     Timber.e(stringBuilder.toString());
-    MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+
+    mTvCodeNum.setText(mTemplates.get(0).getTachcashCode());
+    mTvDate.setText(getString(R.string.payment_date, mTemplates.get(0).getDate()));
+
+    mRvPayments.setLayoutManager(new LinearLayoutManager(getContext()));
+    mRvPayments.setNestedScrollingEnabled(false);
+    mAdapter = new PaymentsAdapter(pos -> {
+      mTemplates.remove(pos);
+      calculateTemplates();
+    });
+    mRvPayments.setAdapter(mAdapter);
+    mAdapter.addList(mTemplates);
+  }
+
+  @SuppressLint("DefaultLocale") private void calculateTemplates() {
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append("7");
+    mAmount = 0;
+    for (TemplateEntity template : mTemplates) {
+      mAmount += template.getAmount();
+      stringBuilder.append(String.format("%04d", template.getService()))
+          .append(String.format("%04d", template.getAmount()));
+    }
+    for (int i = 0; i < 3 - mTemplates.size(); i++) {
+      stringBuilder.append(String.format("%04d", 0)).append(String.format("%04d", 0));
+    }
+    stringBuilder.append(String.format("%04d", mAmount));
+    generateQr(stringBuilder.toString());
+
+    Timber.e(stringBuilder.toString());
+  }
+
+  private void generateQr(String qr) {
+    mTvAmount.setText(getString(R.string.payment_hrn, mAmount));
+    MultiFormatWriter multiFormatWriter1 = new MultiFormatWriter();
     try {
-      BitMatrix bitMatrix =
-          multiFormatWriter.encode(stringBuilder.toString(), BarcodeFormat.CODE_128, 1200, 200);
+      BitMatrix bitMatrix = multiFormatWriter1.encode(qr, BarcodeFormat.CODE_128, 1200, 200);
       BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
       Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
       mIvBarCode.setImageBitmap(bitmap);
     } catch (WriterException e) {
       Timber.e(e);
     }
-
-    mTvCodeNum.setText(mTemplates.get(0).getTachcashCode());
-    mTvDate.setText(getString(R.string.payment_date, mTemplates.get(0).getDate()));
-    mTvAmount.setText(getString(R.string.payment_hrn, mAmount));
-
-    mRvPayments.setLayoutManager(new LinearLayoutManager(getContext()));
-    mAdapter = new PaymentsAdapter();
-    mRvPayments.setAdapter(mAdapter);
-    mAdapter.addList(mTemplates);
   }
 
   @OnClick(R.id.ivBack) public void onMLlTemplatesClicked() {

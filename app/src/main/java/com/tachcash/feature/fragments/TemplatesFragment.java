@@ -77,7 +77,8 @@ public class TemplatesFragment extends BaseFragment implements TemplatesView {
   @OnClick(R.id.btnPayAll) public void onClickPayAll() {
     if (mTemplates.size() > 0) {
       ArrayList<TemplateEntity> templates = new ArrayList<>();
-      for (int i = 0; i < 3; i++) {
+      int size = mTemplates.size() < 3 ? mTemplates.size() : 3;
+      for (int i = 0; i < size; i++) {
         templates.add(mTemplates.get(i));
       }
       mNavigator.addFragmentTagBackStack((MainActivity) Objects.requireNonNull(getActivity()),

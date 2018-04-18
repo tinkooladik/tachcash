@@ -51,13 +51,15 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
   private int mVerticalPadding = dpToPx(4);
   private Navigator mNavigator;
   private AppCompatActivity mActivity;
+  private boolean isMobileService;
 
   public ServiceChildAdapter(RecyclerView recyclerView, Navigator navigator,
-      AppCompatActivity activity) {
+      AppCompatActivity activity, boolean isMobileService) {
     App.getAppComponent().inject(this);
     mRecyclerView = recyclerView;
     mNavigator = navigator;
     mActivity = activity;
+    this.isMobileService = isMobileService;
   }
 
   public void addList(List<ServiceChildren> listData) {
@@ -89,6 +91,12 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
     } else {
       holder.mClParent.setPadding(mPadding, mVerticalPadding, mPadding, mVerticalPadding);
     }
+    if (isMobileService) {
+      holder.mTvAccountHint.setText(
+          holder.mClParent.getContext().getString(R.string.payment_account_title_phone));
+      holder.mEtAccount.setHint(
+          holder.mClParent.getContext().getString(R.string.payment_account_hint_phone));
+    }
   }
 
   public void setSelected(int selectedPos) {
@@ -108,6 +116,7 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
     @BindView(R.id.ivIcon) AppCompatImageView mIvIcon;
     @BindView(R.id.ivArrow) AppCompatImageView mIvArrow;
     @BindView(R.id.tvName) TextView mTvName;
+    @BindView(R.id.tvAccountHint) TextView mTvAccountHint;
     @BindView(R.id.expandable_layout) ExpandableLayout mExpandableLayout;
     @BindView(R.id.clParent) ConstraintLayout mClParent;
     @BindView(R.id.etAccount) EditText mEtAccount;

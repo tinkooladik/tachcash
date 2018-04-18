@@ -59,8 +59,8 @@ public class CatalogChildFragment extends BaseFragment implements CatalogChildVi
     mTvTitle.setText(Objects.requireNonNull(mServiceParent).getTitle());
 
     mCatalogChildPresenter.getAllServicesChild(mServiceParent.getId());
-
-    mAdapter = new ServiceChildAdapter(mRvCatalog, mNavigator, (MainActivity) getActivity());
+    mAdapter = new ServiceChildAdapter(mRvCatalog, mNavigator, (MainActivity) getActivity(),
+        mServiceParent.getId() == 2);
     mRvCatalog.setLayoutManager(new LinearLayoutManager(getContext()));
     mRvCatalog.setAdapter(mAdapter);
 

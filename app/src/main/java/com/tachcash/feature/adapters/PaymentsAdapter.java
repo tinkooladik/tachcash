@@ -25,6 +25,15 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
   //@Inject RxBus mRxBus;
 
   private ArrayList<TemplateEntity> mListData = new ArrayList<>();
+  private PaymentsAdapter.OnItemRemovedListener mOnItemRemovedListener;
+
+  public interface OnItemRemovedListener {
+    void onItemRemoved(int pos);
+  }
+
+  public PaymentsAdapter(PaymentsAdapter.OnItemRemovedListener listener) {
+    mOnItemRemovedListener = listener;
+  }
 
   //public PaymentsAdapter() {
   //  App.getAppComponent().inject(this);
@@ -71,6 +80,7 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
     @OnClick(R.id.ivDelete) public void onClickDelete() {
       //mDataManager.deleteTemplate(mListData.get(getAdapterPosition()));
       //mRxBus.post(new RxBusHelper.UpdateBadgeCount());
+      mOnItemRemovedListener.onItemRemoved(getAdapterPosition());
       mListData.remove(getAdapterPosition());
       notifyItemRemoved(getAdapterPosition());
     }
