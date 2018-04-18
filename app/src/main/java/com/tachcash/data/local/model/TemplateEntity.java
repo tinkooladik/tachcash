@@ -9,7 +9,7 @@ import android.os.Parcelable;
 public class TemplateEntity implements Parcelable {
 
   private int mService;
-  private Long mAccount;
+  private String mAccount;
   private int mAmount;
   private String mDate;
   private String mTachcashCode;
@@ -19,7 +19,7 @@ public class TemplateEntity implements Parcelable {
   public TemplateEntity() {
   }
 
-  public TemplateEntity(int service, Long account, int amount, String date, String tachcashCode,
+  public TemplateEntity(int service, String account, int amount, String date, String tachcashCode,
       String icon, String serviceName) {
     mService = service;
     mAccount = account;
@@ -32,7 +32,7 @@ public class TemplateEntity implements Parcelable {
 
   protected TemplateEntity(Parcel in) {
     mService = in.readInt();
-    mAccount = in.readLong();
+    mAccount = in.readString();
     mAmount = in.readInt();
     mDate = in.readString();
     mTachcashCode = in.readString();
@@ -42,7 +42,7 @@ public class TemplateEntity implements Parcelable {
 
   @Override public void writeToParcel(Parcel dest, int flags) {
     dest.writeInt(mService);
-    dest.writeLong(mAccount);
+    dest.writeString(mAccount);
     dest.writeInt(mAmount);
     dest.writeString(mDate);
     dest.writeString(mTachcashCode);
@@ -68,7 +68,7 @@ public class TemplateEntity implements Parcelable {
     return mService;
   }
 
-  public Long getAccount() {
+  public String getAccount() {
     return mAccount;
   }
 
@@ -84,7 +84,7 @@ public class TemplateEntity implements Parcelable {
     mService = service;
   }
 
-  public void setAccount(Long account) {
+  public void setAccount(String account) {
     mAccount = account;
   }
 

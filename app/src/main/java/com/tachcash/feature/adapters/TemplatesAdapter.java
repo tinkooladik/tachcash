@@ -49,7 +49,7 @@ public class TemplatesAdapter extends RecyclerView.Adapter<TemplatesAdapter.View
   private OnItemRemovedListener mOnItemRemovedListener;
 
   public interface OnItemRemovedListener {
-    void onItemRemoved();
+    void onItemRemoved(int pos);
   }
 
   public TemplatesAdapter(RecyclerView recyclerView, AppCompatActivity activity,
@@ -82,7 +82,7 @@ public class TemplatesAdapter extends RecyclerView.Adapter<TemplatesAdapter.View
     holder.mTvAccount.setText(
         mActivity.getString(R.string.templates_account, template.getAccount()));
     holder.mEtAmount.setText(String.valueOf(template.getAmount()));
-    holder.mEtAccount.setText(String.valueOf(template.getAccount()));
+    holder.mEtAccount.setText(template.getAccount());
 
     if (position == 0) {
       holder.mClParent.setPadding(mPadding, mPadding, mPadding, mVerticalPadding);
@@ -126,22 +126,23 @@ public class TemplatesAdapter extends RecyclerView.Adapter<TemplatesAdapter.View
     }
 
     @OnClick({ R.id.btnDelete, R.id.ivDelete }) public void onClickDelete() {
+      mOnItemRemovedListener.onItemRemoved(getAdapterPosition());
       mDataManager.deleteTemplate(mListData.get(getAdapterPosition()));
       mRxBus.post(new RxBusHelper.UpdateBadgeCount());
       mListData.remove(getAdapterPosition());
       notifyItemRemoved(getAdapterPosition());
-      mOnItemRemovedListener.onItemRemoved();
     }
 
     @OnClick(R.id.btnSave) public void onCLickSave() {
       if (mEtAccount.length() > 0 && mEtAmount.length() > 0) {
         mDataManager.updateTemplate(mListData.get(getAdapterPosition()), createTemplate());
-        mListData.get(getAdapterPosition())
-            .setAccount(Long.parseLong(mEtAccount.getText().toString()));
+        mListData.get(getAdapterPosition()).setAccount(mEtAccount.getText().toString());
         mListData.get(getAdapterPosition())
             .setAmount(Integer.parseInt(mEtAmount.getText().toString()));
         notifyItemChanged(getAdapterPosition());
-        Toast.makeText(mRecyclerView.getContext(), "Шаблон сохранен!", Toast.LENGTH_LONG).show();
+        Toast.makeText(mRecyclerView.getContext(),
+            mRecyclerView.getContext().getString(R.string.template_saved), Toast.LENGTH_LONG)
+            .show();
       } else {
         showErrorAlert();
       }
@@ -159,7 +160,7 @@ public class TemplatesAdapter extends RecyclerView.Adapter<TemplatesAdapter.View
     private TemplateEntity createTemplate() {
       TemplateEntity templateEntity = new TemplateEntity();
       templateEntity.setService(mListData.get(getAdapterPosition()).getService());
-      templateEntity.setAccount(Long.parseLong(mEtAccount.getText().toString()));
+      templateEntity.setAccount(mEtAccount.getText().toString());
       templateEntity.setAmount(Integer.parseInt(mEtAmount.getText().toString()));
       templateEntity.setServiceName(mListData.get(getAdapterPosition()).getServiceName());
       templateEntity.setDate(getFormattedDateFromTimestamp(System.currentTimeMillis()));

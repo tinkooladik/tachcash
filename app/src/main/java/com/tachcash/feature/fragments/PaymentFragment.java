@@ -84,7 +84,7 @@ public class PaymentFragment extends BaseFragment implements PaymentView {
       mTemplates.add(templateEntity);
       stringBuilder.append("99")
           .append(String.format("%04d", templateEntity.getService()))
-          .append(String.format("%012d", templateEntity.getAccount()))
+          .append(String.format("%012d", Long.parseLong(templateEntity.getAccount())))
           .append(String.format("%04d", templateEntity.getAmount()));
       mAmount += templateEntity.getAmount();
       generateQr(stringBuilder.toString());

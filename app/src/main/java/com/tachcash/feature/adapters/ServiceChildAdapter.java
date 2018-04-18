@@ -131,7 +131,9 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
       if (mEtAccount.length() > 0 && mEtAmount.length() > 0) {
         mDataManager.saveTemplate(createTemplate());
         mRxBus.post(new RxBusHelper.UpdateBadgeCount());
-        Toast.makeText(mRecyclerView.getContext(), "Шаблон сохранен!", Toast.LENGTH_LONG).show();
+        Toast.makeText(mRecyclerView.getContext(),
+            mRecyclerView.getContext().getString(R.string.template_saved), Toast.LENGTH_LONG)
+            .show();
       } else {
         showErrorAlert();
       }
@@ -158,7 +160,7 @@ public class ServiceChildAdapter extends RecyclerView.Adapter<ServiceChildAdapte
     private TemplateEntity createTemplate() {
       TemplateEntity templateEntity = new TemplateEntity();
       templateEntity.setService(mListData.get(getAdapterPosition()).getId());
-      templateEntity.setAccount(Long.parseLong(mEtAccount.getText().toString()));
+      templateEntity.setAccount(mEtAccount.getText().toString());
       templateEntity.setAmount(Integer.parseInt(mEtAmount.getText().toString()));
       templateEntity.setServiceName(mListData.get(getAdapterPosition()).getName());
       templateEntity.setDate(getFormattedDateFromTimestamp(System.currentTimeMillis()));

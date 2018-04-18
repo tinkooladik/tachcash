@@ -39,10 +39,11 @@
   <string name="templates_title">Корзина</string>
   <string name="templates_title_descr">сейчас в корзине %s</string>
   <string name="templates_amount">Сумма: %d грн</string>
-  <string name="templates_account">| %d</string>
+  <string name="templates_account">| %s</string>
   <string name="templates_delete">Удалить</string>
   <string name="templates_save">Сохранить</string>
   <string name="templates_pay_all">Оплатить все платежи</string>
+  <string name="template_saved">Платеж сохранен!</string>
 
   <!-- map -->
   <string name="permission_title">Важно!</string>

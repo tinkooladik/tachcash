@@ -59,7 +59,7 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
     holder.mTvSum.setText(
         holder.mIvServiceIcon.getContext().getString(R.string.payment_hrn, template.getAmount()));
     holder.mTvServiceName.setText(template.getServiceName());
-    holder.mTvAccount.setText(String.valueOf(template.getAccount()));
+    holder.mTvAccount.setText(template.getAccount());
   }
 
   @Override public int getItemCount() {

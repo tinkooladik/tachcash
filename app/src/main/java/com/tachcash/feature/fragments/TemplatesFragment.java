@@ -53,7 +53,8 @@ public class TemplatesFragment extends BaseFragment implements TemplatesView {
     super.onViewCreated(view, savedInstanceState);
 
     mRvTemplates.setLayoutManager(new LinearLayoutManager(getContext()));
-    mAdapter = new TemplatesAdapter(mRvTemplates, (MainActivity) getActivity(), () -> {
+    mAdapter = new TemplatesAdapter(mRvTemplates, (MainActivity) getActivity(), (pos) -> {
+      mTemplates.remove(pos);
       mItemsCount--;
       mTvTitle.setText(getString(R.string.templates_title_descr,
           getResources().getQuantityString(R.plurals.plurals_services, mItemsCount, mItemsCount)));
@@ -75,14 +76,16 @@ public class TemplatesFragment extends BaseFragment implements TemplatesView {
   }
 
   @OnClick(R.id.btnPayAll) public void onClickPayAll() {
-    if (mTemplates.size() > 0) {
+    if (mTemplates.size() > 1) {
       ArrayList<TemplateEntity> templates = new ArrayList<>();
       int size = mTemplates.size() < 3 ? mTemplates.size() : 3;
       for (int i = 0; i < size; i++) {
         templates.add(mTemplates.get(i));
       }
+      mNavigator.addFragmentTagBackStack((MainActivity) Objects.requireNonNull(getActivity()), R.id.container_main, PaymentFragment.newInstance(templates), FRAGMENT_PAYMENT);
+    } else if (mTemplates.size() == 1) {
       mNavigator.addFragmentTagBackStack((MainActivity) Objects.requireNonNull(getActivity()),
-          R.id.container_main, PaymentFragment.newInstance(templates), FRAGMENT_PAYMENT);
+          R.id.container_main, PaymentFragment.newInstance(mTemplates.get(0)), FRAGMENT_PAYMENT);
     } else {
       showToastMessage("Ваша корзина пуста!");
     }
