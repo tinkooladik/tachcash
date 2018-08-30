@@ -57,10 +57,6 @@ public class MainActivity extends BaseActivity implements MainView {
     BadgeHelper.addBadge(mBottomNavigationView, 1);
   }
 
-  public void selectPaymentTab() {
-    mBottomNavigationView.setSelectedItemId(R.id.tab_payment);
-  }
-
   @Override public void updateBadge(int count) {
     BadgeHelper.updateBadge(mBottomNavigationView, 1, count);
   }

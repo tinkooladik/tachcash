@@ -142,15 +142,6 @@ public class PaymentFragment extends BaseFragment implements PaymentView {
   }
 
   @OnClick(R.id.ivBack) public void onMLlTemplatesClicked() {
-    //((MainActivity) Objects.requireNonNull(getActivity())).selectPaymentTab();
-    //mNavigator.replaceFragmentTag((MainActivity) Objects.requireNonNull(getActivity()),
-    //    R.id.container_main, TemplatesFragment.newInstance(), FRAGMENT_TEMPLATES);
     Objects.requireNonNull(getActivity()).onBackPressed();
   }
-
-  //@OnClick(R.id.llDelete) public void onMLlDeleteClicked() {
-  //  mPaymentPresenter.deleteTemplate(mTemplate);
-  //  showToastMessage("Шаблон удален!");
-  //  Objects.requireNonNull(getActivity()).onBackPressed();
-  //}
 }

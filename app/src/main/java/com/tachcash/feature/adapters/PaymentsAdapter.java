@@ -22,8 +22,6 @@ import java.util.List;
 
 public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHolder> {
 
-  //@Inject RxBus mRxBus;
-
   private ArrayList<TemplateEntity> mListData = new ArrayList<>();
   private PaymentsAdapter.OnItemRemovedListener mOnItemRemovedListener;
 
@@ -34,10 +32,6 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
   public PaymentsAdapter(PaymentsAdapter.OnItemRemovedListener listener) {
     mOnItemRemovedListener = listener;
   }
-
-  //public PaymentsAdapter() {
-  //  App.getAppComponent().inject(this);
-  //}
 
   public void addList(List<TemplateEntity> listData) {
     mListData.clear();
@@ -78,8 +72,6 @@ public class PaymentsAdapter extends RecyclerView.Adapter<PaymentsAdapter.ViewHo
     }
 
     @OnClick(R.id.ivDelete) public void onClickDelete() {
-      //mDataManager.deleteTemplate(mListData.get(getAdapterPosition()));
-      //mRxBus.post(new RxBusHelper.UpdateBadgeCount());
       mOnItemRemovedListener.onItemRemoved(getAdapterPosition());
       mListData.remove(getAdapterPosition());
       notifyItemRemoved(getAdapterPosition());
